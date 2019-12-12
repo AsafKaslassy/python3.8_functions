@@ -2,6 +2,7 @@ import os
 import sys
 import math
 from fractions import Fraction
+import utils
 
 
 def fractions():
@@ -111,13 +112,13 @@ def dic_of_tuples():
     923123: (923123, "scala now", 522, 34.9)
 
   }
-  for id, name, pages, price in books:
-    # (__, ____, _____, ____) = books[isbn]
+  for isbn in books:
+    (id, name, pages, price) = books[isbn]
 
     print(id, name, pages, price)
 
 
-def simple_Comprehensive_List():
+def simple_comprehensive_list():
   numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
   list = [n * n for n in numbers]
@@ -131,7 +132,6 @@ def calc_factorial(number):
 
   else:
     return number * calc_factorial(number - 1)
-
 
   numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
@@ -167,7 +167,6 @@ def total_income():
 
 
 def calc_list_of_tuples():
-
   """
   The following list includes tuples.
   Each one of the tuples includes a number and its base.
@@ -178,34 +177,32 @@ def calc_list_of_tuples():
   :return:
   """
   sum = 0
-  numbers = [(10001,2),(23432,5),(245334,8),(234234,7)]
-  for (number,base) in numbers:
-    sum += int(str(number),base)
-    print(number,base)
-  print("sum: = ",sum)
+  numbers = [(10001, 2), (23432, 5), (245334, 8), (234234, 7)]
+  for (number, base) in numbers:
+    sum += int(str(number), base)
+    print(number, base)
+  print("sum: = ", sum)
 
 
 def calc_sum_of_tuples():
   sum = 0
-  for number in range(1,100):
+  for number in range(1, 100):
     sum += number
 
   print(sum)
 
 
-
-
 def Map_of_factorial(n):
-  if n==0:
+  if n == 0:
     return 1
   else:
-    return n*Map_of_factorial(n-1)
+    return n * Map_of_factorial(n - 1)
 
+
+"""
 # factorials = map(Map_of_factorial,[1,2,3,4,5,6])
 # for number in factorials:
 #    print(number)
-
-
 
 
 # firstnames = ["moshe","haim","daniela"]
@@ -217,11 +214,6 @@ def Map_of_factorial(n):
 # for ob in names:
 #
 #    print(ob[0]+" "+ob[1])
-
-
-
-
-
 
 
 # numbers=[12,3,6,-5,-12,-8,13,62]
@@ -238,28 +230,124 @@ def Map_of_factorial(n):
 #    print(number)
 #
 
-numbers=[12,3,6,-5,-12,-8,13,62]
+# numbers = [12,3,6,-5,-12,-8,13,62]
 # vec = filter(check,numbers )
-for number in numbers:
-  if number>0:
-    print (number)
-  else:
-    print("negative")
+# for number in numbers:
+#  if number>0:
+#    print (number)
+#  else:
+#    print("negative")
+
+"""
 
 
+# def Filtering_Positive_Numbers():
+#   pass
+#
+#
+# numbers = [12, 3, 6, -5, -12, -8, 13, 62]
+#
+#
+# def check(n):
+#   if n > 0:
+#     return n
+#   else:
+#     return False
+#
+#
+# vec = filter(check, numbers)
+#
+# for number in vec:
+#   print(number)
 
-def c():
-  pass
+
+def comprehension_list_of_averages():
+  """
+  You should develop a short program that creates a list of tuples.
+  Each tuple should represent a specific student.
+  Each tuple should hold the 'first name', 'last name', 'id' and 'average'
+  (of the specific student that tuple represents).
+  You should create a comprehension list of the averages of all students.
+  """
+  list_of_student_tuples = [
+    ("Asaf", "Kaslassy", 301467098, 95),
+    ("John", "Smith", 3000003, 90),
+    ("Barbara", "Straised", 400004, 85),
+    ("Jimmy", "Handrix", 500005, 80)
+  ]
+  grades_comprehension_list = [item[3] for item in list_of_student_tuples]
+  for item in grades_comprehension_list:
+    if item > 89:
+      print(item)
 
 
-def d():
-  pass
+# # mapDemo
+# numbers1 = [1, 2, 3, 4, 5]
 
 
-# ___________________________
+def f(price):
+  in_dollars = price / 3.5
+  return in_dollars
+
+
+# numbers2 = map(f, numbers1)
+#
+# for num in numbers2:
+#   print(num)
+
+def average(math, physics, chemistry, history):
+  """
+  (Difficulty Level 2/5)
+  Develop a simple script that includes the definition
+  of the average function. The average function has
+  four parameters: math, physics, chemistry, and history.
+  The average function should receive the marks in these
+  four subjects and return their average.
+  You should include the required code for calculating David's average.
+  David's marks (90 in math, 92 in physics, 80 in chemistry and 70 in history)
+  should be passed over packed in a dict object.
+  """
+  # print("grades : ", math, physics, chemistry, history)
+  david_marks = {
+    "math": 90,
+    "physics": 92,
+    "chemistry": 80,
+    "history": 70
+  }
+
+  # avarages_david = sum(david_marks.get())
+  # print(avarages_david)
+
+
+def use_my_utils(a, b):
+  differenceof = utils.differenceof(a, b)
+  sumof = utils.sumof(a, b)
+  multiplyof = utils.multiplyof(a, b)
+  print(differenceof)
+  print(sumof)
+  print(multiplyof)
+
+
+def directories():
+  """
+  Develop a simple application that calculates
+  the number of files and the number of sub-folders
+  in the current folder... and prints these numbers to the screen
+
+  """
+
+
+# ____________________________________________________________________________________
 
 
 def main():
+  david_marks = {
+    "math": 90,
+    "physics": 92,
+    "chemistry": 80,
+    "history": 70
+  }
+
   """
   uncomment the function you want to run
   """
@@ -272,16 +360,16 @@ def main():
   # tuple_swap()
   # list_of_tuples()
   # dic_of_tuples()
-  # simple_Comprehensive_List()
+  # simple_comprehensive_list()
   # calc_factorial()
   # total_income()
   # calc_list_of_tuples()
   # calc_sum_of_tuples()
-  # Map_of_factorial
-
-
-  # TODO: understand dic_of_tuples()
-  # TODO: understand   Map_of_factorial(1) vs Map_of_factorial
+  # Map_of_factorial()
+  # Filtering_Positive_Numbers
+  # comprehension_list_of_averages()
+  # average(**david_marks)
+  use_my_utils(10, 5)
 
 
 if __name__ == '__main__':
