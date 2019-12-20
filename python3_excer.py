@@ -1,8 +1,30 @@
+__author__ = "asaf.kaslassy@gmail.com"
+
 import os
 import sys
 import math
-from fractions import Fraction
+import glob
 import utils
+import pyperclip
+from fractions import Fraction
+
+# GLOBALS
+numbers = [12, 3, 6, -5, -12, -8, 13, 62]
+sequence1 = [1, 2, 3, 4, 5, 6]
+sequence2 = [3, 4, 5, 6]
+
+
+def paste_func_template(func_name):
+  lower = func_name.lower()
+  lower.replace(' ', '_')
+  no_spaces = '_'.join(lower.split())
+  final_func_name = no_spaces + '()'
+  final_func = "\n\n" + "def " + final_func_name + ':\n  """\n  ' + final_func_name + '\n  """\n  \n  pass\n'
+  pyperclip.copy(final_func)
+  pyperclip.paste()
+  # print(final_func)
+
+
 
 
 def fractions():
@@ -19,7 +41,7 @@ def fractions():
   print("copied list (changed 1st fraction)", list_copy)
 
 
-def average():
+def simple_average():
   """You should develop a short program that creates a list
   that includes the following numbers:  12, 15 and 18.
   Your code should calculate the average of all numbers
@@ -119,7 +141,7 @@ def dic_of_tuples():
 
 
 def simple_comprehensive_list():
-  numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+  # numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
   list = [n * n for n in numbers]
 
@@ -133,7 +155,7 @@ def calc_factorial(number):
   else:
     return number * calc_factorial(number - 1)
 
-  numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+  # numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
   list = [factorial(n) for n in numbers]
 
@@ -192,19 +214,17 @@ def calc_sum_of_tuples():
   print(sum)
 
 
-def Map_of_factorial(n):
+def map_of_factorial(n):
   if n == 0:
     return 1
   else:
-    return n * Map_of_factorial(n - 1)
+    return n * map_of_factorial(n - 1)
 
 
 """
 # factorials = map(Map_of_factorial,[1,2,3,4,5,6])
 # for number in factorials:
 #    print(number)
-
-
 # firstnames = ["moshe","haim","daniela"]
 #
 # familynames = ["israeli","michael","darky"]
@@ -214,8 +234,6 @@ def Map_of_factorial(n):
 # for ob in names:
 #
 #    print(ob[0]+" "+ob[1])
-
-
 # numbers=[12,3,6,-5,-12,-8,13,62]
 #
 # def check(n) :
@@ -229,7 +247,6 @@ def Map_of_factorial(n):
 # for number in vec:
 #    print(number)
 #
-
 # numbers = [12,3,6,-5,-12,-8,13,62]
 # vec = filter(check,numbers )
 # for number in numbers:
@@ -237,28 +254,47 @@ def Map_of_factorial(n):
 #    print (number)
 #  else:
 #    print("negative")
-
 """
 
 
-# def Filtering_Positive_Numbers():
-#   pass
-#
-#
-# numbers = [12, 3, 6, -5, -12, -8, 13, 62]
-#
-#
-# def check(n):
-#   if n > 0:
-#     return n
-#   else:
-#     return False
-#
-#
-# vec = filter(check, numbers)
-#
-# for number in vec:
-#   print(number)
+def Filtering_Positive_Numbers():
+
+  def check(n):
+    if n > 0:
+      return n
+    else:
+      return False
+
+  vec = filter(check, numbers)
+
+  for number in vec:
+    print(number)
+    pass
+
+
+def use_my_utils(a, b):
+  differenceof = utils.differenceof(a, b)
+  sumof = utils.sumof(a, b)
+  multiplyof = utils.multiplyof(a, b)
+  print(differenceof)
+  print(sumof)
+  print(multiplyof)
+
+
+def directories():
+  """
+  Develop a simple application that calculates
+  the number of files and the number of sub-folders
+  in the current folder... and prints these numbers to the screen
+  """
+  dirname = r'D:\pythonProjects'
+  names = os.listdir(r'D:\pythonProjects')
+  for name in names:
+    if name.endswith(".py"):
+      print(name, "file is located here:\n --->", os.path.join(dirname, name))
+
+  print(glob.glob(dirname + '/*.py'))
+  print("number of *.py (python) files :", len(glob.glob(dirname + '/*.py')))
 
 
 def comprehension_list_of_averages():
@@ -281,23 +317,17 @@ def comprehension_list_of_averages():
       print(item)
 
 
-# # mapDemo
-# numbers1 = [1, 2, 3, 4, 5]
+# david_average
+david_marks = {
+  "math": 90,
+  "physics": 92,
+  "chemistry": 80,
+  "history": 70
+}
 
 
-def f(price):
-  in_dollars = price / 3.5
-  return in_dollars
-
-
-# numbers2 = map(f, numbers1)
-#
-# for num in numbers2:
-#   print(num)
-
-def average(math, physics, chemistry, history):
+def simple_dict_object_assignment(math, physics, chemistry, history):
   """
-  (Difficulty Level 2/5)
   Develop a simple script that includes the definition
   of the average function. The average function has
   four parameters: math, physics, chemistry, and history.
@@ -307,54 +337,111 @@ def average(math, physics, chemistry, history):
   David's marks (90 in math, 92 in physics, 80 in chemistry and 70 in history)
   should be passed over packed in a dict object.
   """
-  # print("grades : ", math, physics, chemistry, history)
-  david_marks = {
-    "math": 90,
-    "physics": 92,
-    "chemistry": 80,
-    "history": 70
-  }
-
-  # avarages_david = sum(david_marks.get())
-  # print(avarages_david)
+  subjects = (math, physics, chemistry, history)
+  calced_average = sum(subjects) / len(subjects)
+  print("David's Avarage of his grades:{0} is : {1}".format(subjects, calced_average))
 
 
-def use_my_utils(a, b):
-  differenceof = utils.differenceof(a, b)
-  sumof = utils.sumof(a, b)
-  multiplyof = utils.multiplyof(a, b)
-  print(differenceof)
-  print(sumof)
-  print(multiplyof)
-
-
-def directories():
+def average(david, avi, ronen, galit):
   """
-  Develop a simple application that calculates
-  the number of files and the number of sub-folders
-  in the current folder... and prints these numbers to the screen
+  The average function should receive the marks of all students
+  packed in a dict object and then calculate their average and return it.
+  Call the func like this :
+  result = average(david=82, avi=90, ronen=78, galit=92)
+  """
+  students = (david, avi, ronen, galit)
+  calculated_average = sum(students) / len(students)
+  return calculated_average
 
+
+def lambda_expression_simple_list_filtering():
+  """
+  Develop a simple program that creates a list of strings.
+  Use the filter function for getting a new list of strings
+  that includes those strings from the original
+  list that their length is smaller than 10.
+  Your solution should use a lambda expression.
+  """
+  list_of_strings = ["asaf", "sdsdsddsds", "gsgs", "dyfhgdtfghgdfhgfhdf"]
+  filtered_strings = filter(lambda txt: filter_string_length(txt), list_of_strings)
+
+  def filter_string_length(text):
+    if len(text) < 10:
+      return True
+    else:
+      return False
+
+  for string in filtered_strings:
+    print(string)
+
+
+def intersect_function_list_comprehension_expression(sequence1, sequence2):
+  """
+  Define a function that is capable of calculating the intersection between two sequences.
+  Your function should use the list comprehension expression.
+  You should check your function by calling it and passing over two strings.
+  """
+
+  intersection_sequence = []
+
+  for num in sequence1:
+    if num in sequence2:
+      intersection_sequence.append(num)
+  return intersection_sequence
+
+
+def recursive_factorial():
+  """
+  Define a recursive function that is capable of calculating the factorial of the passed argument.
+  """
+
+  pass
+
+
+def the_set_operators():
+  """
+  Given the following two sets:
+  one = {'a','b','c','d','e','f','g','h'}
+  two = {'a','d','g'}
+  Calculate the value of each one of the following expressions:
+  """
+  one = {'a','b','c','d','e','f','g','h'}
+  two = {'a','d','g'}
+  if 'a' in one:
+    print("'a' in one")
+  print(one-two)
+  print(one | two)
+  print(one & two)
+  print(one ^ two)
+  print(set('bcd') < one )
+  print(set('abcde') > one)
+
+
+def comprehension_set_of_students():
+  """
+  You should develop a set that includes tuples as its elements.
+  Each tuple holds the values that describe a specific student.
+  You should create a comprehension set of Student objects
+  based on the set of tuples. You should define the Student class accordingly.
+  In addition, your code should iterate the set of Student objects
+  and print the description of each one of them to the screen.
   """
 
 
-# ____________________________________________________________________________________
+
+
+  pass
 
 
 def main():
-  david_marks = {
-    "math": 90,
-    "physics": 92,
-    "chemistry": 80,
-    "history": 70
-  }
-
   """
   uncomment the function you want to run
   """
+  # paste_func_template(func_name="Comprehension Set of Students")
   # fractions()
   # print_words_into_file()
   # read_lines_from_file()
-  # average()
+  # simple_average()
   # trenary_operator()
   # simple_while_loop()
   # tuple_swap()
@@ -365,12 +452,21 @@ def main():
   # total_income()
   # calc_list_of_tuples()
   # calc_sum_of_tuples()
-  # Map_of_factorial()
-  # Filtering_Positive_Numbers
+  # map_of_factorial()
+  # Filtering_Positive_Numbers()
   # comprehension_list_of_averages()
-  # average(**david_marks)
-  use_my_utils(10, 5)
+  # simple_dict_object_assignment(**david_marks)
+  # use_my_utils(10, 5)
+  # directories()
+  # average(**student_marks)
+  # result = average(david=82, avi=90, ronen=78, galit=92) ; print("Avarage:",result)
+  # lambda_expression_simple_list_filtering()
+  # print(intersect_function_list_comprehension_expression(sequence1, sequence2))
+  # recursive_factorial()
+  # the_set_operators()
+  comprehension_set_of_students()
 
 
 if __name__ == '__main__':
   main()
+
