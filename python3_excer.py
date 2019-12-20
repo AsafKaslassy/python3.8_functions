@@ -1,4 +1,4 @@
-__author__ = "asaf.kaslassy@gmail.com"
+__author__ = "asaf.kaslassy@gmail.com" #Asaf Kaslassy
 
 import os
 import sys
