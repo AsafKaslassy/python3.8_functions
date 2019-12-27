@@ -1,20 +1,45 @@
-__author__ = "asaf.kaslassy@gmail.com" #Asaf Kaslassy
-#git-test
-#test2
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+__author__ = "asaf.kaslassy@gmail.com"
 
 import os
 import sys
 import math
+import time
 import glob
 import utils
+import pprint
+import socket
+import shutil
+import random
+# import codecs
 import pyperclip
+import urllib.request
+import xml.dom.minidom
 from fractions import Fraction
+from utils import MathUtilsException
 
 # GLOBALS
 numbers = [12, 3, 6, -5, -12, -8, 13, 62]
 sequence1 = [1, 2, 3, 4, 5, 6]
 sequence2 = [3, 4, 5, 6]
 
+# david_average
+david_marks = {
+  "math": 90,
+  "physics": 92,
+  "chemistry": 80,
+  "history": 70
+  }
+CRED = '\033[91m'
+CEND = '\033[1m'
+
+factorial_exception_message = """FactorialException,
+                            \n a number for which it is not possible
+                            \n to calculate factorial
+                            \n(number smaller than 0)
+                            """
 
 def paste_func_template(func_name):
   lower = func_name.lower()
@@ -25,8 +50,6 @@ def paste_func_template(func_name):
   pyperclip.copy(final_func)
   pyperclip.paste()
   # print(final_func)
-
-
 
 
 def fractions():
@@ -278,9 +301,11 @@ def use_my_utils(a, b):
   differenceof = utils.differenceof(a, b)
   sumof = utils.sumof(a, b)
   multiplyof = utils.multiplyof(a, b)
+  divide = utils.divide(a, b)
   print(differenceof)
   print(sumof)
   print(multiplyof)
+  print(divide)
 
 
 def directories():
@@ -317,15 +342,6 @@ def comprehension_list_of_averages():
   for item in grades_comprehension_list:
     if item > 89:
       print(item)
-
-
-# david_average
-david_marks = {
-  "math": 90,
-  "physics": 92,
-  "chemistry": 80,
-  "history": 70
-}
 
 
 def simple_dict_object_assignment(math, physics, chemistry, history):
@@ -399,7 +415,7 @@ def recursive_factorial():
 
   pass
 
-
+#__________collections:______________#
 def the_set_operators():
   """
   Given the following two sets:
@@ -430,16 +446,244 @@ def comprehension_set_of_students():
   """
 
 
+def lotto_numbers():
+  """
+  Develop a simple application that
+  generates 6 randomly selected numbers
+  in the range 1..42. The numbers must
+  be unique (they cannot repeat themselves).
+  Your solution should use the Set collection.
+  """
+  numbers_list = []
+  for num in range (1,42+1):
+    numbers_list.append(num)
+  numbers_set = set(numbers_list)
+  # print (numbers_set)
+  print ("The *set* of 6 Lotto winning numbers are : ")
+  print (set(random.sample(numbers_set,6)))
+
+#__________XML:______________#
+def bank_israel_currency_exchange_rates():
+  """
+  You should develop a simple application that prints out
+  the current exchange rates of all currencies Bank Israel
+  can provide us with their exchange rates. You can find
+  all currencies' exchange rates at
+  https://www.boi.org.il/currency.xml
+  """
+  doc = xml.dom.minidom.parse("currency.xml");
+  mapping = {}
+  for nodeBook in doc.getElementsByTagName("CURRENCY"):
+    # print (nodeBook)
+    COUNTRY = nodeBook.getAttribute("COUNTRY")
+    COUNTRY_child = nodeBook.firstChild
+    title = nodeBook.data
+    print (title)
+  #  RATE = nodeBook.getElementsByTagName("RATE")
+  #  for nodeRate in RATE:
+  #    nodeText = nodeRate.firstChild
+  #    title = nodeRate.data
+  #    mapping[RATE] = title
+  # print(mapping)
+
+
+
+  # for nodeBook in document.getElementsByTagName("CURRENCY"):
+  #  CURRENCY = nodeBook.getAttribute("RATE")
+  #  titles = nodeBook.getElementsByTagName("RATE")
+  #  for nodeTitle in titles:
+  #    nodeText = nodeTitle.firstChild
+  #    title = nodeText.data
+  #    mapping[CURRENCY] = title
+  # print(mapping)
+
 
 
   pass
+
+
+def currencies_tcp_ip_client_server(currency_code):
+  """
+  You should develop a TCP/IP server that
+  receives a currency code (e.g. USD, EURO etc..)
+  and returns its exchange rate.
+  In addition, you should develop a TCP/IP client
+  application that receives from the user a currency
+  code and prints out its exchange rate.
+  The TCP/IP client application should interact with the server
+  """
+  currency_code = None
+  rate = None
+
+  return rate
+
+#__________Exceptions:______________#
+class FactorialException(Exception):
+  pass
+
+
+def the_factorial_assignment(num):
+  """
+  Define the FactorialException class.It should extend Exception.
+  Define the factorial function. Whenever the factorial function receives a number for which
+  it is not possible to calculate factorial (number smaller than 0)
+  an exception should be thrown. It should be of the FactorialException type.
+  Check your definition for the factorial function by calling it passing over a negative number.
+  ██╗  ██╗ ███╗   ███╗ ██╗
+  ╚██╗██╔╝ ████╗ ████║ ██║
+   ╚███╔╝  ██╔████╔██║ ██║
+   ██╔██╗  ██║╚██╔╝██║ ██║
+  ██╔╝ ██╗ ██║ ╚═╝ ██║ ███████
+  """
+
+  if num <0:
+    time.sleep(0.1)
+    raise FactorialException
+  return 10*num
+# try:
+#  num = 18-12
+#  print(the_factorial_assignment(num))
+# except FactorialException:
+#   print(factorial_exception_message)
+# print('continue...')
+
+
+def the_mathutils_module_assignment(a,b):
+  """
+  The new module should include the definition for the MathUtilsException class.
+  MathUtilsException should extend Exception.When trying to call the divide
+  function passing over 0 as the second argument a MathUtilsException should be raised.
+  """
+  if b == 0:
+    print("0 detected")
+    time.sleep(1)
+    raise ZeroDivisionError
+  divide = utils.divide(a, b)
+  return divide
+# try:
+#   a,b = 4,0
+#   print(a,"/",b,"=",round(the_mathutils_module_assignment(a,b),ndigits=3))
+# except ZeroDivisionError:
+#   print("You tried dividing by zero \n "
+#         "Zero division error:")
+# print('continue...')
+
+
+#__________Files:______________#
+
+def road_prayer():
+  """
+  creates a new file with road prayer (in Hebrew)
+  saved into it. The road prayer should be in Hebrew
+  and it should be in UTF8.
+  """
+  road_prayer_text_in_hebrew = """
+           יְהִי רָצוֹן מִלְפָנֶיךָ יְיָ אֱלֹהֵינוּ וֵאלֹהֵי אֲבוֹתֵינוּ,
+          שֶׁתּוֹלִיכֵנוּ לְשָׁלוֹם וְתַצְעִידֵנוּ לְשָׁלוֹם וְתַדְרִיכֵנוּ לְשָׁלוֹם (וְתִסְמְכֵנוּ לְשָׁלוֹם),
+          וְתַגִּיעֵנוּ לִמְחוֹז חֶפְצֵנוּ לְחַיִּים וּלְשִׂמְחָה וּלְשָׁלוֹם.
+"""
+  print(road_prayer_text_in_hebrew)
+  filename = "road_prayer_in_hebrew"
+  with open(filename + '.txt', 'w',encoding='utf8') as filepath:
+      filepath.write(road_prayer_text_in_hebrew)
+
+
+def the_id_numbers_assignment():
+  """
+  reads the ID numberas from the file and prints them to the screen.
+  Your short program should use the Set collection in order to
+  avoid printing the same ID number more than once.
+  """
+  #_____random_ID_generator_______#
+  Final_ID_List = set()
+  number_of_IDs = 0
+
+  while number_of_IDs < 10:
+      random_ID = random.randint(301000000,302000000)
+      # random_ID = random.randint(10,11)
+      number_of_IDs += 1
+      Final_ID_List.add(random_ID)
+
+  # Final_ID_List = [301467098,123,343,123,435,235,145,123,232,
+  #                    123,123,343,123,435,235,145,123,232,]
+  filename = "ID_numbers"
+
+  #write to file:
+  with open(filename + '.csv', 'w') as filepath:
+    for num in Final_ID_List:
+      filepath.write(str(num)+'\n')
+
+  #read from file:
+  readfile = open(filename + '.csv', 'r')
+  ID_numbers_set =set()
+  for ID in readfile:
+    ID_numbers_set.add(ID)
+  id_numbers_no_dup=list(ID_numbers_set)
+  final_id_numbers=[]
+  for item in id_numbers_no_dup:
+    final_id_numbers.append(item[0:-1])
+  print ("\n\tOriginal ID list:\t\t",Final_ID_List)
+  print (len(Final_ID_List))
+  print ("\nID list with no duplicates:",final_id_numbers)
+  print (len(final_id_numbers))
+
+
+def students_average_calculation():
+  """
+  Given a CSV file (each line includes strings separated using commas) that lists students marks...
+  each row (id, name, mark, course) describes a specific student mark in a specific course,
+  you should develop a simple application that creates a dict object for representing all students and their average.
+  The dict keys should be the students IDs. The dict values should be objects instantiated from the Student class.
+  Each Student object should have the marks attribute that holds the reference for a list of Mark objects.
+  You should define the Student and the Mark classes separately. Once the entire data was read and processed
+  the application should calculate the students' average (the average of all students' averages)
+  """
+  readfile = open('StudentAvarages' + '.csv', mode='r')
+  for value in readfile:
+      print (value)
+
+
+def simple_files_copying():
+  """
+  Develop a simple application that goes over all files
+  in the current directory and copy all image files
+  extension is 'jpg' or 'gif' or 'png') to a new subfolder,
+  that its name is 'images'.
+  """
+
+  valid_extensions = [".jpg" , ".jpeg", ".gif"  ,".png" ]
+  source = r"C:\Users\Assaf\PycharmProjects\untitled\output\circles"
+  destination = r"C:\Users\Assaf\PycharmProjects\untitled\output\circles\images"
+  fileNames = os.listdir(source)
+
+  if not os.path.exists('output\circles\images'):
+    os.makedirs('output\circles\\images')
+  print ("Started copying")
+  time.sleep(1)
+
+  for file in fileNames:
+    source_full_file_path = os.path.join(source,file)
+    extension = os.path.splitext(file)[1]
+    if extension.lower() in valid_extensions:
+      print ("copying {}\{} to ---> {}\{}".format(source,file,destination,file))
+      shutil.copy(source_full_file_path, destination)
+    else:
+      continue
+  os.startfile(destination)
+
+
+
+  # for idx, imageName in enumerate(fileNames):
+  #   if extension.lower() not in valid_extensions:
+  #     continue
+  #
 
 
 def main():
   """
   uncomment the function you want to run
   """
-  # paste_func_template(func_name="Comprehension Set of Students")
+
   # fractions()
   # print_words_into_file()
   # read_lines_from_file()
@@ -466,9 +710,21 @@ def main():
   # print(intersect_function_list_comprehension_expression(sequence1, sequence2))
   # recursive_factorial()
   # the_set_operators()
-  comprehension_set_of_students()
+  # lotto_numbers()
+  # comprehension_set_of_students()
+  # bank_israel_currency_exchange_rates()
+  # currencies_tcp_ip_client_server()  # (USD)
+  # the_factorial_assignment(num)
+  # the_mathutils_module_assignment(a,b)
+  # road_prayer()
+  # the_id_numbers_assignment()
+  # students_average_calculation()
+  simple_files_copying()
 
+
+
+  #_________________________________________________
+  paste_func_template(func_name="Simple Files Copying")
 
 if __name__ == '__main__':
   main()
-
