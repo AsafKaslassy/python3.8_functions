@@ -4,6 +4,8 @@
 __author__ = "asaf.kaslassy@gmail.com"
 
 import os
+import re
+import io
 import sys
 import math
 import time
@@ -13,9 +15,10 @@ import pprint
 import socket
 import shutil
 import random
-# import codecs
 import pyperclip
+# import pandas as pd
 import urllib.request
+import pymysql.cursors
 import xml.dom.minidom
 from fractions import Fraction
 from utils import MathUtilsException
@@ -31,7 +34,7 @@ david_marks = {
   "physics": 92,
   "chemistry": 80,
   "history": 70
-  }
+}
 CRED = '\033[91m'
 CEND = '\033[1m'
 
@@ -40,6 +43,7 @@ factorial_exception_message = """FactorialException,
                             \n to calculate factorial
                             \n(number smaller than 0)
                             """
+
 
 def paste_func_template(func_name):
   lower = func_name.lower()
@@ -247,43 +251,34 @@ def map_of_factorial(n):
 
 
 """
-# factorials = map(Map_of_factorial,[1,2,3,4,5,6])
-# for number in factorials:
-#    print(number)
-# firstnames = ["moshe","haim","daniela"]
-#
-# familynames = ["israeli","michael","darky"]
-#
-# names = zip(firstnames,familynames)
-#
-# for ob in names:
-#
-#    print(ob[0]+" "+ob[1])
-# numbers=[12,3,6,-5,-12,-8,13,62]
-#
-# def check(n) :
-#
-#    if n>0:
-#
-#        return n
-#    else:
-#        return "michael"
-# vec = filter(check,n )
-# for number in vec:
-#    print(number)
-#
-# numbers = [12,3,6,-5,-12,-8,13,62]
-# vec = filter(check,numbers )
-# for number in numbers:
-#  if number>0:
-#    print (number)
-#  else:
-#    print("negative")
+factorials = map(Map_of_factorial,[1,2,3,4,5,6])
+for number in factorials:
+   print(number)
+firstnames = ["moshe","haim","daniela"]
+familynames = ["israeli","michael","darky"]
+names = zip(firstnames,familynames)
+for ob in names:
+   print(ob[0]+" "+ob[1])
+numbers=[12,3,6,-5,-12,-8,13,62]
+def check(n) :
+   if n>0:
+       return n
+   else:
+       return "michael"
+vec = filter(check,n )
+for number in vec:
+   print(number)
+numbers = [12,3,6,-5,-12,-8,13,62]
+vec = filter(check,numbers )
+for number in numbers:
+ if number>0:
+   print (number)
+ else:
+   print("negative")
 """
 
 
 def Filtering_Positive_Numbers():
-
   def check(n):
     if n > 0:
       return n
@@ -295,6 +290,7 @@ def Filtering_Positive_Numbers():
   for number in vec:
     print(number)
     pass
+
 
 
 def use_my_utils(a, b):
@@ -415,7 +411,8 @@ def recursive_factorial():
 
   pass
 
-#__________collections:______________#
+
+# __________collections:______________#
 def the_set_operators():
   """
   Given the following two sets:
@@ -423,15 +420,15 @@ def the_set_operators():
   two = {'a','d','g'}
   Calculate the value of each one of the following expressions:
   """
-  one = {'a','b','c','d','e','f','g','h'}
-  two = {'a','d','g'}
+  one = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'}
+  two = {'a', 'd', 'g'}
   if 'a' in one:
     print("'a' in one")
-  print(one-two)
+  print(one - two)
   print(one | two)
   print(one & two)
   print(one ^ two)
-  print(set('bcd') < one )
+  print(set('bcd') < one)
   print(set('abcde') > one)
 
 
@@ -455,14 +452,17 @@ def lotto_numbers():
   Your solution should use the Set collection.
   """
   numbers_list = []
-  for num in range (1,42+1):
+  for num in range(1, 42 + 1):
     numbers_list.append(num)
   numbers_set = set(numbers_list)
   # print (numbers_set)
-  print ("The *set* of 6 Lotto winning numbers are : ")
-  print (set(random.sample(numbers_set,6)))
+  print("The *set* of 6 Lotto winning numbers are : ")
+  print(set(random.sample(numbers_set, 6)))
 
-#__________XML:______________#
+
+# __________XML:______________#
+
+
 def bank_israel_currency_exchange_rates():
   """
   You should develop a simple application that prints out
@@ -471,35 +471,20 @@ def bank_israel_currency_exchange_rates():
   all currencies' exchange rates at
   https://www.boi.org.il/currency.xml
   """
-  doc = xml.dom.minidom.parse("currency.xml");
+
+  document = xml.dom.minidom.parse("currency.xml")
   mapping = {}
-  for nodeBook in doc.getElementsByTagName("CURRENCY"):
-    # print (nodeBook)
-    COUNTRY = nodeBook.getAttribute("COUNTRY")
-    COUNTRY_child = nodeBook.firstChild
-    title = nodeBook.data
-    print (title)
-  #  RATE = nodeBook.getElementsByTagName("RATE")
-  #  for nodeRate in RATE:
-  #    nodeText = nodeRate.firstChild
-  #    title = nodeRate.data
-  #    mapping[RATE] = title
-  # print(mapping)
 
+  codes1 = document.getElementsByTagName("CURRENCYCODE")
+  rates1 = document.getElementsByTagName("RATE")
 
+  codes2 = map(lambda ob: ob.firstChild.data, codes1)
+  rates2 = map(lambda ob: ob.firstChild.data, rates1)
 
-  # for nodeBook in document.getElementsByTagName("CURRENCY"):
-  #  CURRENCY = nodeBook.getAttribute("RATE")
-  #  titles = nodeBook.getElementsByTagName("RATE")
-  #  for nodeTitle in titles:
-  #    nodeText = nodeTitle.firstChild
-  #    title = nodeText.data
-  #    mapping[CURRENCY] = title
-  # print(mapping)
+  tuples = zip(codes2, rates2)
 
-
-
-  pass
+  for tpl in tuples:
+    print(tpl)
 
 
 def currencies_tcp_ip_client_server(currency_code):
@@ -517,8 +502,15 @@ def currencies_tcp_ip_client_server(currency_code):
 
   return rate
 
-#__________Exceptions:______________#
+
+# __________Exceptions:______________#
+
+
 class FactorialException(Exception):
+  pass
+
+
+class StudentsPlatformException(Exception):
   pass
 
 
@@ -529,17 +521,14 @@ def the_factorial_assignment(num):
   it is not possible to calculate factorial (number smaller than 0)
   an exception should be thrown. It should be of the FactorialException type.
   Check your definition for the factorial function by calling it passing over a negative number.
-  ██╗  ██╗ ███╗   ███╗ ██╗
-  ╚██╗██╔╝ ████╗ ████║ ██║
-   ╚███╔╝  ██╔████╔██║ ██║
-   ██╔██╗  ██║╚██╔╝██║ ██║
-  ██╔╝ ██╗ ██║ ╚═╝ ██║ ███████
   """
 
-  if num <0:
+  if num < 0:
     time.sleep(0.1)
     raise FactorialException
-  return 10*num
+  return 10 * num
+
+
 # try:
 #  num = 18-12
 #  print(the_factorial_assignment(num))
@@ -548,7 +537,7 @@ def the_factorial_assignment(num):
 # print('continue...')
 
 
-def the_mathutils_module_assignment(a,b):
+def the_mathutils_module_assignment(a, b):
   """
   The new module should include the definition for the MathUtilsException class.
   MathUtilsException should extend Exception.When trying to call the divide
@@ -560,6 +549,9 @@ def the_mathutils_module_assignment(a,b):
     raise ZeroDivisionError
   divide = utils.divide(a, b)
   return divide
+
+
+"""
 # try:
 #   a,b = 4,0
 #   print(a,"/",b,"=",round(the_mathutils_module_assignment(a,b),ndigits=3))
@@ -567,9 +559,12 @@ def the_mathutils_module_assignment(a,b):
 #   print("You tried dividing by zero \n "
 #         "Zero division error:")
 # print('continue...')
+"""
 
 
-#__________Files:______________#
+
+
+# __________Files:______________#
 
 def road_prayer():
   """
@@ -584,8 +579,8 @@ def road_prayer():
 """
   print(road_prayer_text_in_hebrew)
   filename = "road_prayer_in_hebrew"
-  with open(filename + '.txt', 'w',encoding='utf8') as filepath:
-      filepath.write(road_prayer_text_in_hebrew)
+  with open(filename + '.txt', 'w', encoding='utf8') as filepath:
+    filepath.write(road_prayer_text_in_hebrew)
 
 
 def the_id_numbers_assignment():
@@ -594,38 +589,51 @@ def the_id_numbers_assignment():
   Your short program should use the Set collection in order to
   avoid printing the same ID number more than once.
   """
-  #_____random_ID_generator_______#
+  # _____random_ID_generator_______#
   Final_ID_List = set()
   number_of_IDs = 0
 
   while number_of_IDs < 10:
-      random_ID = random.randint(301000000,302000000)
-      # random_ID = random.randint(10,11)
-      number_of_IDs += 1
-      Final_ID_List.add(random_ID)
+    random_ID = random.randint(301000000, 302000000)
+    # random_ID = random.randint(10,11)
+    number_of_IDs += 1
+    Final_ID_List.add(random_ID)
 
   # Final_ID_List = [301467098,123,343,123,435,235,145,123,232,
   #                    123,123,343,123,435,235,145,123,232,]
   filename = "ID_numbers"
 
-  #write to file:
+  # write to file:
   with open(filename + '.csv', 'w') as filepath:
     for num in Final_ID_List:
-      filepath.write(str(num)+'\n')
+      filepath.write(str(num) + '\n')
 
-  #read from file:
+  # read from file:
   readfile = open(filename + '.csv', 'r')
-  ID_numbers_set =set()
+  ID_numbers_set = set()
   for ID in readfile:
     ID_numbers_set.add(ID)
-  id_numbers_no_dup=list(ID_numbers_set)
-  final_id_numbers=[]
+  id_numbers_no_dup = list(ID_numbers_set)
+  final_id_numbers = []
   for item in id_numbers_no_dup:
     final_id_numbers.append(item[0:-1])
-  print ("\n\tOriginal ID list:\t\t",Final_ID_List)
-  print (len(Final_ID_List))
-  print ("\nID list with no duplicates:",final_id_numbers)
-  print (len(final_id_numbers))
+  print("\n\tOriginal ID list:\t\t", Final_ID_List)
+  print(len(Final_ID_List))
+  print("\nID list with no duplicates:", final_id_numbers)
+  print(len(final_id_numbers))
+
+
+class Student:
+  def __init__(self, idVal, nameVal, marksVal):
+    self.id = idVal
+    self.name = nameVal
+    self.marks = marksVal
+
+
+class Mark:
+  def __init__(self, subject, mark):
+    self.subject = subject
+    self.mark = mark
 
 
 def students_average_calculation():
@@ -638,9 +646,70 @@ def students_average_calculation():
   You should define the Student and the Mark classes separately. Once the entire data was read and processed
   the application should calculate the students' average (the average of all students' averages)
   """
-  readfile = open('StudentAvarages' + '.csv', mode='r')
+  students = dict()
+
+  with open(r"D:\pythonProjects\StudentAvarages.csv", mode='r') as file:
+    lines = file.readlines
+    for line in lines:
+      text = line.split(",")
+      if text[0] in students:
+        students[text[0]].marks.append(Mark(text[3], text[2]))
+
+  def students_data(self):
+    """
+    getStudent(id), getStudents(), saveStudent(ob). You should define the Student class.
+    The data of each and every student should be saved in a separated file.
+    The name of each file should be the id number of the student its data is saved within the file.
+    Make sure, all students files are saved within a specific folder. In addition, you should define a new exception class.
+    Its name should be StudentsPlatformException. Write simple code for checking the module you developed
+    """
+    pass
+
+  def getStudent(self, id):
+    pass
+
+  def getStudents(self):
+    pass
+
+
+def students_simple_data():
+  """
+  Create a CSV file that holds data about 10 of your friends.
+  Develop a simple application that reads the data from the CSV file and prints it to the screen.
+  The data should include (at the minimum) the student's ID and their average.
+  Your code should include the use of regular expression for validating the ID and the average.
+  Rows with invalid data won't be printed out to the screen.
+  """
+
+  ten_digit_phone_pattern = r'^[0-9]{10}$'
+  nine_digit_id_pattern = r'^[0-9]{9}$'
+  result = re.search(ten_digit_phone_pattern, '0544767766')
+  if result:
+    print("match")
+  else:
+    print("no match")
+
+
+
+
+  """  
+  readfile = open('StudentAvarages' + '.csv')
   for value in readfile:
-      print (value)
+    splitted = value.split()
+    # print(splitted)
+"""
+
+#   regex= "\w{2}"
+# #
+#   if re.search(regex, df_avg):
+#         print("Valid phone number")
+#   else:
+#         print("Invalid phone number")
+
+
+# csv_path = r"C:\Users\Assaf\PycharmProjects\untitled\StudentAvarages.csv"
+# df_id = pd.read_csv(csv_path,usecols=['id'])
+# df_avg = pd.read_csv(csv_path,usecols=
 
 
 def simple_files_copying():
@@ -651,32 +720,111 @@ def simple_files_copying():
   that its name is 'images'.
   """
 
-  valid_extensions = [".jpg" , ".jpeg", ".gif"  ,".png" ]
+  valid_extensions = [".jpg", ".jpeg", ".gif", ".png"]
   source = r"C:\Users\Assaf\PycharmProjects\untitled\output\circles"
   destination = r"C:\Users\Assaf\PycharmProjects\untitled\output\circles\images"
   fileNames = os.listdir(source)
 
   if not os.path.exists('output\circles\images'):
-    os.makedirs('output\circles\\images')
-  print ("Started copying")
+    try:
+      os.makedirs('output\circles\\images')
+    except:
+      raise OSError
+
+  print("Started copying")
   time.sleep(1)
 
   for file in fileNames:
-    source_full_file_path = os.path.join(source,file)
+    source_full_file_path = os.path.join(source, file)
     extension = os.path.splitext(file)[1]
     if extension.lower() in valid_extensions:
-      print ("copying {}\{} to ---> {}\{}".format(source,file,destination,file))
+      print("copying {}\{} to ---> {}\{}".format(source, file, destination, file))
       shutil.copy(source_full_file_path, destination)
     else:
       continue
   os.startfile(destination)
 
 
+def multiplication_numbers():
+  """
+  Develop a simple application that receives numbers
+  through the command line and prints out their multiplication with each other.
+  You should use sys.argv.
+  """
 
-  # for idx, imageName in enumerate(fileNames):
-  #   if extension.lower() not in valid_extensions:
-  #     continue
-  #
+  mult = 1
+  for n in sys.argv:
+    try:
+      mult = mult * int(n)
+    except:
+      None
+  print("the Mult of {} is :".format(sys.argv[1:]))
+  print(mult)
+
+
+def comparing_files():
+  """
+  Develop a simple application that receives through the command line the
+  names of two files that hold texts in english. The application should print
+  True if the content is exactly the same,
+  and False (otherwise). The optional "--ignorecase" argument will
+  turn the comparison into a none case-sensitive one.
+  """
+  first_file = sys.argv[1]
+  second_file = sys.argv[2]
+  print("comparing:\n'{0}' \n Vs. \n'{1}'\n".format(first_file, second_file))
+  first_file_path = open(first_file, 'r')
+  first_file_list = []
+  for word1 in first_file_path:
+    first_file_list.append(word1)
+  print(first_file_list)
+
+  second_file_path = open(second_file, 'r')
+  second_file_list = []
+  for word2 in second_file_path:
+    second_file_list.append(word2)
+  print(second_file_list)
+
+  if first_file_list == second_file_list:
+    print("\n\tTrue ! , file are the same")
+  else:
+    print(" \nFalse ! , files are not the same")
+
+
+# ______databases_MySQL_____________#
+
+
+def mySQL():
+  # connect with the database
+  connection = pymysql.connect(host='localhost',
+                               user='israel',
+                               password='usa',
+                               db='israel',
+                               charset='utf8',
+                               port=3306,
+                               cursorclass=pymysql.cursors.DictCursor)
+  try:
+    with connection.cursor() as cursor:
+      sql = "INSERT INTO `users` (`username`, `password`) VALUES (%s, %s)"
+      cursor.execute(sql, ('haimm', '12345'))
+    # we must commit in order to have the changes saved
+    connection.commit()
+
+  finally:
+    connection.close()
+
+
+# __________reqularExpression_________#
+
+
+def regularExpressionDemo():
+  pattern = re.compile("\d+g+")
+  result = pattern.match("1233gggfasf43gggggg2", 3, 5)
+  if result:
+    print("match")
+  else:
+    print("no match")
+
 
 
 def main():
@@ -684,47 +832,60 @@ def main():
   uncomment the function you want to run
   """
 
-  # fractions()
-  # print_words_into_file()
-  # read_lines_from_file()
-  # simple_average()
-  # trenary_operator()
-  # simple_while_loop()
-  # tuple_swap()
-  # list_of_tuples()
-  # dic_of_tuples()
-  # simple_comprehensive_list()
-  # calc_factorial()
-  # total_income()
-  # calc_list_of_tuples()
-  # calc_sum_of_tuples()
-  # map_of_factorial()
-  # Filtering_Positive_Numbers()
-  # comprehension_list_of_averages()
-  # simple_dict_object_assignment(**david_marks)
-  # use_my_utils(10, 5)
-  # directories()
-  # average(**student_marks)
-  # result = average(david=82, avi=90, ronen=78, galit=92) ; print("Avarage:",result)
-  # lambda_expression_simple_list_filtering()
-  # print(intersect_function_list_comprehension_expression(sequence1, sequence2))
-  # recursive_factorial()
-  # the_set_operators()
-  # lotto_numbers()
+  # fractions()                                 #TODO:done
+  # print_words_into_file()                     #TODO:done
+  # read_lines_from_file()                      #TODO:done
+  # simple_average()                            #TODO:done
+  # trenary_operator()                          #TODO:done
+  # simple_while_loop()                         #TODO:done
+  # tuple_swap()                                #TODO:done
+  # list_of_tuples()                            #TODO:done
+  # dic_of_tuples()                             #TODO:done
+  # simple_comprehensive_list()                 #TODO:done
+  # calc_factorial()                            #TODO:done
+  # total_income()                              #TODO:done
+  # calc_list_of_tuples()                       #TODO:done
+  # calc_sum_of_tuples()                        #TODO:done
+  # map_of_factorial()                          #TODO:done
+  # Filtering_Positive_Numbers()                #TODO:done
+  # comprehension_list_of_averages()            #TODO:done
+  # simple_dict_object_assignment(**david_marks)#TODO:done
+  # use_my_utils(10, 5)                         #TODO:done
+  # directories()                               #TODO:done
+  # average(**student_marks)                    #TODO:done
+  # result = average(david=82, avi=90, ronen=78, galit=92) ; print("Avarage:",result) #TODO:done
+  # lambda_expression_simple_list_filtering()   #TODO:done
+  # print(intersect_function_list_comprehension_expression(sequence1, sequence2))     #TODO:done
+  # recursive_factorial()                       #TODO:done
+  # the_set_operators()                         #TODO:done
+  # lotto_numbers()                             #TODO:done
   # comprehension_set_of_students()
   # bank_israel_currency_exchange_rates()
-  # currencies_tcp_ip_client_server()  # (USD)
+  # currencies_tcp_ip_client_server()  #
   # the_factorial_assignment(num)
   # the_mathutils_module_assignment(a,b)
-  # road_prayer()
-  # the_id_numbers_assignment()
+  # road_prayer()                               #TODO:done
+  # the_id_numbers_assignment()                 #TODO:done
   # students_average_calculation()
-  simple_files_copying()
+  # simple_files_copying()                      #TODO:done
+  # students_data()
+  # students_simple_data()
+  # multiplication_numbers()                    #TODO:done
+  # comparing_files()                           #TODO:done
+  # mySQL()
+  # regularExpressionDemo()
+
+  # TODO:
+  '''
+  students_average_calculation()
+  students_data()
+  students_simple_data()
+  '''
+
+  # _________________________________________________
+  # paste_func_template(func_name="Students Simple Data")
 
 
-
-  #_________________________________________________
-  paste_func_template(func_name="Simple Files Copying")
 
 if __name__ == '__main__':
   main()
