@@ -14,14 +14,16 @@ import utils
 import pprint
 import socket
 import shutil
+import turtle
 import random
+import logging
 import pyperclip
 # import pandas as pd
 import urllib.request
-import pymysql.cursors
+# import pymysql.cursors
 import xml.dom.minidom
 from fractions import Fraction
-from utils import MathUtilsException
+# from utils import MathUtilsException
 
 # GLOBALS
 numbers = [12, 3, 6, -5, -12, -8, 13, 62]
@@ -38,10 +40,17 @@ david_marks = {
 CRED = '\033[91m'
 CEND = '\033[1m'
 
-factorial_exception_message = """FactorialException,
+factorial_exception_message = """FactorialException\n
                             \n a number for which it is not possible
                             \n to calculate factorial
                             \n(number smaller than 0)
+                            """
+
+Triangle_exception_message = """
+\tTriangle_exception:
+\tThe Triangle Inequality Theorem states
+\tthat the sum of any 2 sides of a triangle
+\tmust be greater than the measure of the third side.
                             """
 
 
@@ -53,7 +62,7 @@ def paste_func_template(func_name):
   final_func = "\n\n" + "def " + final_func_name + ':\n  """\n  ' + final_func_name + '\n  """\n  \n  pass\n'
   pyperclip.copy(final_func)
   pyperclip.paste()
-  # print(final_func)
+  print(final_func)
 
 
 def fractions():
@@ -543,12 +552,12 @@ def the_mathutils_module_assignment(a, b):
   MathUtilsException should extend Exception.When trying to call the divide
   function passing over 0 as the second argument a MathUtilsException should be raised.
   """
-  if b == 0:
-    print("0 detected")
-    time.sleep(1)
-    raise ZeroDivisionError
-  divide = utils.divide(a, b)
-  return divide
+  # if b == 0:
+  #   print("0 detected")
+  #   time.sleep(1)
+  #   raise ZeroDivisionError
+  # divide = utils.divide(a, b)
+  # return divide
 
 
 """
@@ -681,30 +690,30 @@ def students_simple_data():
   Rows with invalid data won't be printed out to the screen.
   """
 
-  ten_digit_phone_pattern = r'^[0-9]{10}$'
-  nine_digit_id_pattern = r'^[0-9]{9}$'
-  result = re.search(ten_digit_phone_pattern, '0544767766')
+  user_input = 'asde4a12@gmail.com'
+
+  phone_pattern_ten_digits = r'^[0-9]{3}[-][0-9]{7}$'
+  id_pattern_nine_digits = r'^[0-9]{9}$'
+  e_mail_pattern = "\A[^@]+@[^@]+\.[^@]{2,4}"
+
+  result = re.search(e_mail_pattern, user_input)
   if result:
     print("match")
+    print(result)
   else:
     print("no match")
 
 
 
 
-  """  
+
+
+  """
   readfile = open('StudentAvarages' + '.csv')
   for value in readfile:
     splitted = value.split()
     # print(splitted)
 """
-
-#   regex= "\w{2}"
-# #
-#   if re.search(regex, df_avg):
-#         print("Valid phone number")
-#   else:
-#         print("Invalid phone number")
 
 
 # csv_path = r"C:\Users\Assaf\PycharmProjects\untitled\StudentAvarages.csv"
@@ -794,24 +803,24 @@ def comparing_files():
 # ______databases_MySQL_____________#
 
 
-def mySQL():
-  # connect with the database
-  connection = pymysql.connect(host='localhost',
-                               user='israel',
-                               password='usa',
-                               db='israel',
-                               charset='utf8',
-                               port=3306,
-                               cursorclass=pymysql.cursors.DictCursor)
-  try:
-    with connection.cursor() as cursor:
-      sql = "INSERT INTO `users` (`username`, `password`) VALUES (%s, %s)"
-      cursor.execute(sql, ('haimm', '12345'))
-    # we must commit in order to have the changes saved
-    connection.commit()
-
-  finally:
-    connection.close()
+# def mySQL():
+#   # connect with the database
+#   connection = pymysql.connect(host='localhost',
+#                                user='israel',
+#                                password='usa',
+#                                db='israel',
+#                                charset='utf8',
+#                                port=3306,
+#                                cursorclass=pymysql.cursors.DictCursor)
+#   try:
+#     with connection.cursor() as cursor:
+#       sql = "INSERT INTO `users` (`username`, `password`) VALUES (%s, %s)"
+#       cursor.execute(sql, ('haimm', '12345'))
+#     # we must commit in order to have the changes saved
+#     connection.commit()
+#
+#   finally:
+#     connection.close()
 
 
 # __________reqularExpression_________#
@@ -826,12 +835,146 @@ def regularExpressionDemo():
     print("no match")
 
 
+class TriangleException(Exception):
+  pass
+
+
+class Triangle:
+  """
+  Define the Triangle class. The __init__ method should allow us to specify the lengths of the three sizes.
+  If the three lengths cannot form a triangle a TriangleException should be raised.
+  Write a short program for testing the Triangle class you defined
+  """
+
+  def __init__(self,A_length,B_length,C_length):
+    self.A_length = A_length
+    self.B_length = B_length
+    self.C_length = C_length
+
+
+def the_triangle_assignment_test(A_length,B_length,C_length):
+
+    The_Triangle_Inequality_Throrem = A_length + B_length > C_length and \
+                                      C_length + B_length > A_length and \
+                                      A_length + C_length > B_length
+    if not The_Triangle_Inequality_Throrem:
+      raise TriangleException
+
+    #   print(CRED,Triangle_exception_message,CEND)
+    #   print (" A_length = {}\n B_length  = {}\n C_length = {}\n".format(A_length,B_length,C_length))
+    #   print ("""
+    #           A + B > C
+    #           C + B > A
+    #           A + C > B
+    #           """)
+    #   os.startfile(r"C:\Users\Assaf\PycharmProjects\untitled\triangle_inequality_theorem.JPG")
+    #
+    #   time.sleep(1)
+    #   raise TriangleException
+    # else:
+    #   print (" A_length = {}\n B_length  = {}\n C_length = {}\n".format(A_length,B_length,C_length))
+    #   print (" The_Triangle_Inequality_Throrem is satisfied for all 3 conditions of the sides ")
+    #
+    #   #Draw Triangle using Turtle python lib
+    #   draw = turtle.Turtle()
+    #   draw.write("Triangle", True, align="right", font='david')
+    #   draw.pensize(10)
+    #   draw.screen.bgcolor("orange")
+    #   draw.forward(100)
+    #   draw.left(120)
+    #   draw.forward(100)
+    #   draw.fillcolor("violet")
+    #   draw.left(120)
+    #   draw.forward(100)
+    #   turtle.done()
+
+
+class BankException(Exception):
+  pass
+
+
+class BankAccount(object):
+  """
+  the following methods: deposit(self,sum) and withdraw(self,sum).
+  Each object instantiated from BankAccount should have the balance attribute.
+  my_sum
+  """
+  def __init__(self, my_sum, starting_balance):
+    self.my_sum = my_sum
+    self.starting_balance = starting_balance
+
+  def deposit(self, my_sum):
+    # deposit = starting_balance + my_sum
+    pass
+
+  def withdraw(self, my_sum):
+    # withdraw = starting_balance - my_sum
+    pass
+
+
+def bank_account_exception_assignment(starting_balance, deposit_sum, withdraw_sum):
+  """
+  Define the BankAccount class. It should include the following methods: deposit(self,sum) and withdraw(self,sum).
+  Each object instantiated from BankAccount should have the balance attribute.
+  When trying to withdraw a sum bigger than the balance a BankException should be raised
+  and the balance should remain the same. BankException should extend Exception.
+  You should create a simple program that creates a new account with a balance of $100,
+  deposits $90 and then withdraws $200. The simple program should print out the balance
+  (after all operations took place).
+  """
+
+  # starting_balance = 100
+  if withdraw_sum == "":
+    withdraw_sum = 0
+  if withdraw_sum == 0:
+    print("no withdraw")
+
+  # deposit = starting_balance + deposit_sum
+  # withdraw = starting_balance - withdraw_sum
+
+  print("deposit_sum =", deposit_sum)
+  print("withdraw_sum =", withdraw_sum)
+
+
+  current_balance = starting_balance + deposit_sum - withdraw_sum
+
+  if current_balance > starting_balance:
+    print("the current balance after all operations took place is: ",  current_balance)
+
+  while current_balance < starting_balance:
+    try:
+      print(CRED, "Illegal operation: \nTrying to withdraw a sum bigger than the balance")
+      print("\tThe current balance stays the same: ", starting_balance)
+      break
+    except BankException:
+      raise BankException
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 def main():
   """
   uncomment the function you want to run
   """
 
+  # result = average(david=82, avi=90, ronen=78, galit=92) ;print("Avarage:",result) #TODO:done
+  # print(intersect_function_list_comprehension_expression(sequence1, sequence2))     #TODO:done
+  # lambda_expression_simple_list_filtering()   #TODO:done
   # fractions()                                 #TODO:done
   # print_words_into_file()                     #TODO:done
   # read_lines_from_file()                      #TODO:done
@@ -853,38 +996,47 @@ def main():
   # use_my_utils(10, 5)                         #TODO:done
   # directories()                               #TODO:done
   # average(**student_marks)                    #TODO:done
-  # result = average(david=82, avi=90, ronen=78, galit=92) ; print("Avarage:",result) #TODO:done
-  # lambda_expression_simple_list_filtering()   #TODO:done
-  # print(intersect_function_list_comprehension_expression(sequence1, sequence2))     #TODO:done
   # recursive_factorial()                       #TODO:done
   # the_set_operators()                         #TODO:done
   # lotto_numbers()                             #TODO:done
-  # comprehension_set_of_students()
-  # bank_israel_currency_exchange_rates()
-  # currencies_tcp_ip_client_server()  #
-  # the_factorial_assignment(num)
-  # the_mathutils_module_assignment(a,b)
   # road_prayer()                               #TODO:done
   # the_id_numbers_assignment()                 #TODO:done
-  # students_average_calculation()
   # simple_files_copying()                      #TODO:done
-  # students_data()
-  # students_simple_data()
   # multiplication_numbers()                    #TODO:done
   # comparing_files()                           #TODO:done
+  # the_mathutils_module_assignment(a,b)        #TODO:done
+  # bank_israel_currency_exchange_rates()       #TODO:done
+  # students_data()
+  # students_simple_data()                      #TODO:-almost done
+  # comprehension_set_of_students()
+  # currencies_tcp_ip_client_server()
+  # the_factorial_assignment(num)
   # mySQL()
+  # students_average_calculation()
   # regularExpressionDemo()
+  # Triangle.the_triangle_assignment()
+  # the_triangle_assignment_test(A_length=12, B_length=13, C_length=14) #TODO: convert this func to work in class (?)
+  # bank_account_exception_assignment(starting_balance=100, deposit_sum=50, withdraw_sum=0)
+
+
+
+
+
+
 
   # TODO:
   '''
-  students_average_calculation()
-  students_data()
-  students_simple_data()
+    students_data()
+    comprehension_set_of_students()
+    currencies_tcp_ip_client_server()
+    the_factorial_assignment(num)
+    mySQL()
+    students_average_calculation()
+    Triangle.the_triangle_assignment()
   '''
 
   # _________________________________________________
-  # paste_func_template(func_name="Students Simple Data")
-
+  # paste_func_template(func_name="The Triangle Assignment")
 
 
 if __name__ == '__main__':
