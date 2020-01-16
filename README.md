@@ -1,5 +1,7 @@
 # python3.8_exercises
-python3.8_exercises
+______________________________________________________________
+
+
 
 
   # result = average(david=82, avi=90, ronen=78, galit=92) ;
