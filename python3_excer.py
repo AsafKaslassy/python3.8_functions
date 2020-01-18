@@ -20,11 +20,13 @@ import turtle
 import random
 import logging
 import pyperclip
-# import pandas as pd
+import file_copy
 import urllib.request
-# import pymysql.cursors
+# import pandas as pd
 import xml.dom.minidom
+# import pymysql.cursors
 from fractions import Fraction
+import validate_data_using_Regex
 
 # from utils import MathUtilsException
 
@@ -35,6 +37,7 @@ sequence2 = [3, 4, 5, 6]
 
 source = r"C:\Users\Assaf\PycharmProjects\untitled\output\circles"
 destination = r"C:\Users\Assaf\PycharmProjects\untitled\output\circles\images"
+csv_path = r"D:\git\python3.8_exercises\StudentAvarages.csv"
 
 # david_average
 david_marks = {
@@ -700,7 +703,7 @@ def students_average_calculation():
     pass
 
 
-def students_simple_data():
+def students_simple_data(csv_path):
   """
   Create a CSV file that holds data about 10 of your friends.
   Develop a simple application that reads the data from the CSV file and prints it to the screen.
@@ -709,7 +712,7 @@ def students_simple_data():
   Rows with invalid data won't be printed out to the screen.
   """
 
-  csv_path = r"D:\git\python3.8_exercises\StudentAvarages.csv"
+  # csv_path = r"D:\git\python3.8_exercises\StudentAvarages.csv"
 
   # items,  e_mail, ID_list, phone_num, name, grade, subject = []
   items = []
@@ -1010,6 +1013,10 @@ def bank_account_exception_assignment(starting_balance, deposit_sum, withdraw_su
       raise BankException
 
 
+class Test(object):
+  pass
+
+
 def main():
   """
   uncomment the function you want to run
@@ -1046,11 +1053,11 @@ def main():
   # the_id_numbers_assignment()                 #TODO:done
   # simple_files_copying()                      #TODO:done
   # multiplication_numbers()                    #TODO:done
-  # comparing_files()                             #TODO:done
+  # comparing_files()                           #TODO:done
   # the_mathutils_module_assignment(a,b)        #TODO:done
   # bank_israel_currency_exchange_rates()       #TODO:done
   # students_data()
-  students_simple_data()  # TODO:-almost done
+  # students_simple_data(csv_path)              # TODO:done
   # comprehension_set_of_students()
   # currencies_tcp_ip_client_server()
   # the_factorial_assignment(num)
