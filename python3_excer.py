@@ -6,6 +6,7 @@ __author__ = "asaf.kaslassy@gmail.com"
 import os
 import re
 import io
+import csv
 import sys
 import math
 import time
@@ -24,6 +25,7 @@ import urllib.request
 # import pymysql.cursors
 import xml.dom.minidom
 from fractions import Fraction
+
 # from utils import MathUtilsException
 
 # GLOBALS
@@ -32,7 +34,7 @@ sequence1 = [1, 2, 3, 4, 5, 6]
 sequence2 = [3, 4, 5, 6]
 
 source = r"C:\Users\Assaf\PycharmProjects\untitled\output\circles"
-destination= r"C:\Users\Assaf\PycharmProjects\untitled\output\circles\images"
+destination = r"C:\Users\Assaf\PycharmProjects\untitled\output\circles\images"
 
 # david_average
 david_marks = {
@@ -41,8 +43,8 @@ david_marks = {
   "chemistry": 80,
   "history": 70
 }
-# CRED = '\033[91m'
-# CEND = '\033[1m'
+CRED = '\033[91m'
+CEND = '\033[0m'
 
 factorial_exception_message = """FactorialException\n
                             \n a number for which it is not possible
@@ -62,13 +64,12 @@ logger.setLevel(logging.INFO)
 fh = logging.FileHandler('python3_8_log.log')
 fh.setLevel(logging.INFO)
 ch = logging.StreamHandler()
-ch.setLevel(logging.INFO )
+ch.setLevel(logging.INFO)
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 fh.setFormatter(formatter)
 ch.setFormatter(formatter)
 logger.addHandler(fh)
 logger.addHandler(ch)
-
 
 
 def paste_func_template(func_name):
@@ -318,7 +319,6 @@ def Filtering_Positive_Numbers():
     pass
 
 
-
 def use_my_utils(a, b):
   differenceof = utils.differenceof(a, b)
   sumof = utils.sumof(a, b)
@@ -457,8 +457,10 @@ def the_set_operators():
   print(set('bcd') < one)
   print(set('abcde') > one)
 
+
 class Student:
   pass
+
 
 def comprehension_set_of_students():
   """
@@ -590,8 +592,6 @@ def the_mathutils_module_assignment(a, b):
 """
 
 
-
-
 # __________Files:______________#
 
 def road_prayer():
@@ -709,38 +709,75 @@ def students_simple_data():
   Rows with invalid data won't be printed out to the screen.
   """
 
-  user_input = 'asde4a12@gmail.com'
+  csv_path = r"D:\git\python3.8_exercises\StudentAvarages.csv"
 
-  phone_pattern_ten_digits = r'^[0-9]{3}[-][0-9]{7}$'
+  # items,  e_mail, ID_list, phone_num, name, grade, subject = []
+  items = []
+  e_mail_list = []     # 0
+  ID_list = []         # 1
+  phone_num_list = []  # 2
+  name_list = []       # 3
+  grade_list = []      # 4
+  subject_list = []    # 5
+
+  with open(csv_path, mode='r') as file:
+    reader = csv.reader(file)
+    for row in reader:
+      items.append(row)
+    for item in items:
+      e_mail_list.append(item[0])
+      ID_list.append(item[1])
+      phone_num_list.append(item[2])
+      name_list.append(item[3])
+      grade_list.append(item[4])
+      subject_list.append(item[5])
+
+  logger.info("started parsing csv: {}".format(csv_path))
+  logger.info("validating e-mails, IDs, and phone numbers")
+  time.sleep(2)
+
+  print("\n#______e-mail_______")
+  e_mail_pattern = "^[^@]+\@[\w]+\.[^@]{2,5}$"
+  count = 0
+  for e_mail in e_mail_list:
+    result = re.search(e_mail_pattern, e_mail)
+    if result:
+      print("e-mail: {} -> Valid".format(result[0]))
+      # logger.info(result)
+    else:
+      print(f"{CRED}e-mail: %s ----> not Valid{CEND}" % e_mail)
+      count += 1
+  print("\tOut of {} e-mails {} are in-valid".format(len(e_mail_list), count))
+  time.sleep(1)
+
+  print("\n\t#______ID_______")
   id_pattern_nine_digits = r'^[0-9]{9}$'
-  e_mail_pattern = "\A[^@]+@[^@]+\.[^@]{2,4}"
+  count = 0
+  for user_id in ID_list:
+    result = re.search(id_pattern_nine_digits, user_id)
+    if result:
+      print("\tID: {} -> Valid".format(result[0]))
+    else:
+      print(f"\t{CRED}ID: %s ----> not Valid{CEND}"%user_id)
+      count += 1
+  print("\t\tOut of {} IDs {} are in-valid".format(len(ID_list), count))
+  time.sleep(1)
 
-  result = re.search(e_mail_pattern, user_input)
-  if result:
-    print("match")
-    print(result)
-  else:
-    print("no match")
-
-
-
-
-
-
-  """
-  readfile = open('StudentAvarages' + '.csv')
-  for value in readfile:
-    splitted = value.split()
-    # print(splitted)
-"""
-
-
-# csv_path = r"C:\Users\Assaf\PycharmProjects\untitled\StudentAvarages.csv"
-# df_id = pd.read_csv(csv_path,usecols=['id'])
-# df_avg = pd.read_csv(csv_path,usecols=
+  print("\n\t\t#______phone_______")
+  phone_pattern_ten_digits = r'^(\d{3}[-][0-9]{7}|\d{10})$'
+  count = 0
+  for phone_number in phone_num_list:
+    result = re.search(phone_pattern_ten_digits, phone_number)
+    if result:
+      print("\t\tphone: {} -> Valid".format(result[0]))
+    else:
+      # print("\t\tphone: {} ----> not Valid".format(phone_number))
+      print(f"\t\t{CRED}phone: %s ----> not Valid{CEND}" % phone_number)
+      count += 1
+  print("\t\t\tOut of {} phone numbers {} are in-valid".format(len(phone_num_list), count))
 
 
-def simple_files_copying(source,destination):
+def simple_files_copying(source, destination):
   """
   simple application that goes over all files
   in the current directory and copies all image files
@@ -758,10 +795,9 @@ def simple_files_copying(source,destination):
 
   if not os.path.exists(destination):
     try:
-      os.makedirs(destination+'\\images')
+      os.makedirs(destination + '\\images')
     except:
       raise OSError
-
 
   logger.info("Started copying")
 
@@ -775,9 +811,8 @@ def simple_files_copying(source,destination):
     else:
       continue
   os.startfile(destination)
-  logger.info('opening folder : %s' %destination)
+  logger.info('opening folder : %s' % destination)
   logger.info('finished successfully')
-
 
 
 def multiplication_numbers():
@@ -872,47 +907,46 @@ class Triangle:
   Write a short program for testing the Triangle class you defined
   """
 
-  def __init__(self,A_length,B_length,C_length):
+  def __init__(self, A_length, B_length, C_length):
     self.A_length = A_length
     self.B_length = B_length
     self.C_length = C_length
 
 
-def the_triangle_assignment_test(A_length,B_length,C_length):
+def the_triangle_assignment_test(A_length, B_length, C_length):
+  The_Triangle_Inequality_Throrem = A_length + B_length > C_length and \
+                                    C_length + B_length > A_length and \
+                                    A_length + C_length > B_length
+  if not The_Triangle_Inequality_Throrem:
+    raise TriangleException
 
-    The_Triangle_Inequality_Throrem = A_length + B_length > C_length and \
-                                      C_length + B_length > A_length and \
-                                      A_length + C_length > B_length
-    if not The_Triangle_Inequality_Throrem:
-      raise TriangleException
-
-    #   logger.info(CRED,Triangle_exception_message,CEND)
-    #   logger.info (" A_length = {}\n B_length  = {}\n C_length = {}\n".format(A_length,B_length,C_length))
-    #   logger.info ("""
-    #           A + B > C
-    #           C + B > A
-    #           A + C > B
-    #           """)
-    #   os.startfile(r"C:\Users\Assaf\PycharmProjects\untitled\triangle_inequality_theorem.JPG")
-    #
-    #   time.sleep(1)
-    #   raise TriangleException
-    # else:
-    #   logger.info (" A_length = {}\n B_length  = {}\n C_length = {}\n".format(A_length,B_length,C_length))
-    #   logger.info (" The_Triangle_Inequality_Throrem is satisfied for all 3 conditions of the sides ")
-    #
-    #   #Draw Triangle using Turtle python lib
-    #   draw = turtle.Turtle()
-    #   draw.write("Triangle", True, align="right", font='david')
-    #   draw.pensize(10)
-    #   draw.screen.bgcolor("orange")
-    #   draw.forward(100)
-    #   draw.left(120)
-    #   draw.forward(100)
-    #   draw.fillcolor("violet")
-    #   draw.left(120)
-    #   draw.forward(100)
-    #   turtle.done()
+  #   logger.info(CRED,Triangle_exception_message,CEND)
+  #   logger.info (" A_length = {}\n B_length  = {}\n C_length = {}\n".format(A_length,B_length,C_length))
+  #   logger.info ("""
+  #           A + B > C
+  #           C + B > A
+  #           A + C > B
+  #           """)
+  #   os.startfile(r"C:\Users\Assaf\PycharmProjects\untitled\triangle_inequality_theorem.JPG")
+  #
+  #   time.sleep(1)
+  #   raise TriangleException
+  # else:
+  #   logger.info (" A_length = {}\n B_length  = {}\n C_length = {}\n".format(A_length,B_length,C_length))
+  #   logger.info (" The_Triangle_Inequality_Throrem is satisfied for all 3 conditions of the sides ")
+  #
+  #   #Draw Triangle using Turtle python lib
+  #   draw = turtle.Turtle()
+  #   draw.write("Triangle", True, align="right", font='david')
+  #   draw.pensize(10)
+  #   draw.screen.bgcolor("orange")
+  #   draw.forward(100)
+  #   draw.left(120)
+  #   draw.forward(100)
+  #   draw.fillcolor("violet")
+  #   draw.left(120)
+  #   draw.forward(100)
+  #   turtle.done()
 
 
 class BankException(Exception):
@@ -925,6 +959,7 @@ class BankAccount(object):
   Each object instantiated from BankAccount should have the balance attribute.
   my_sum
   """
+
   def __init__(self, my_sum, starting_balance):
     self.my_sum = my_sum
     self.starting_balance = starting_balance
@@ -961,36 +996,18 @@ def bank_account_exception_assignment(starting_balance, deposit_sum, withdraw_su
   logger.info("deposit_sum =", deposit_sum)
   logger.info("withdraw_sum =", withdraw_sum)
 
-
   current_balance = starting_balance + deposit_sum - withdraw_sum
 
   if current_balance > starting_balance:
-    logger.info("the current balance after all operations took place is: ",  current_balance)
+    logger.info("the current balance after all operations took place is: ", current_balance)
 
   while current_balance < starting_balance:
     try:
-      logger.info( "Illegal operation: \nTrying to withdraw a sum bigger than the balance")
+      logger.info("Illegal operation: \nTrying to withdraw a sum bigger than the balance")
       logger.info("\tThe current balance stays the same: ", starting_balance)
       break
     except BankException:
       raise BankException
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 def main():
@@ -1033,7 +1050,7 @@ def main():
   # the_mathutils_module_assignment(a,b)        #TODO:done
   # bank_israel_currency_exchange_rates()       #TODO:done
   # students_data()
-  # students_simple_data()                      #TODO:-almost done
+  students_simple_data()  # TODO:-almost done
   # comprehension_set_of_students()
   # currencies_tcp_ip_client_server()
   # the_factorial_assignment(num)
@@ -1044,11 +1061,6 @@ def main():
   # the_triangle_assignment_test(A_length=12, B_length=13, C_length=14) #TODO: convert this func to work in class (?)
   # bank_account_exception_assignment(starting_balance=100, deposit_sum=50, withdraw_sum=0)
   # simple_files_copying(source = source , destination= destination)
-  # commit_test
-
-
-
-
 
   # TODO:
   '''
@@ -1062,7 +1074,7 @@ def main():
   '''
 
   # _________________________________________________
-  paste_func_template(func_name="The Triangle Assignment")
+  # paste_func_template(func_name="The Triangle Assignment")
 
 
 if __name__ == '__main__':
