@@ -22,13 +22,18 @@ import logging
 import pyperclip
 import file_copy
 import urllib.request
-# import pandas as pd
+import pandas as pd
 import xml.dom.minidom
-# import pymysql.cursors
+import pymysql.cursors
+import configparser
 from fractions import Fraction
-import validate_data_using_Regex
-
+# import validate_data_using_Regex
 # from utils import MathUtilsException
+
+
+
+config = configparser.ConfigParser()
+config.read('temp.ini')
 
 # GLOBALS
 numbers = [12, 3, 6, -5, -12, -8, 13, 62]
@@ -49,18 +54,18 @@ david_marks = {
 CRED = '\033[91m'
 CEND = '\033[0m'
 
-factorial_exception_message = """FactorialException\n
-                            \n a number for which it is not possible
-                            \n to calculate factorial
-                            \n(number smaller than 0)
-                            """
+# factorial_exception_message = """FactorialException\n
+#                             \n a number for which it is not possible
+#                             \n to calculate factorial
+#                             \n(number smaller than 0)
+#                             """
 
-Triangle_exception_message = """
-\tTriangle_exception:
-\tThe Triangle Inequality Theorem states
-\tthat the sum of any 2 sides of a triangle
-\tmust be greater than the measure of the third side.
-                            """
+# Triangle_exception_message = """
+# \tTriangle_exception:
+# \tThe Triangle Inequality Theorem states
+# \tthat the sum of any 2 sides of a triangle
+# \tmust be greater than the measure of the third side.
+#                             """
 
 logger = logging.getLogger('python3_8_log')
 logger.setLevel(logging.INFO)
@@ -335,7 +340,7 @@ def use_my_utils(a, b):
 
 def directories():
   """
-  Develop a simple application that calculates
+  simple application that calculates
   the number of files and the number of sub-folders
   in the current folder... and prints these numbers to the screen
   """
@@ -347,6 +352,17 @@ def directories():
 
   print(glob.glob(dirname + '/*.py'))
   print("number of *.py (python) files :", len(glob.glob(dirname + '/*.py')))
+
+
+def create_directories_with_config_file():
+  """
+  """
+
+  config = configparser.ConfigParser()
+  config.read('temp.ini')
+  pycharm_path = (config['dani']['ServerAliveInterval'])
+  print(os.path.join(pycharm_path,'file_copy.log'))
+
 
 
 def comprehension_list_of_averages():
@@ -563,10 +579,10 @@ def the_factorial_assignment(num):
 
 
 # try:
-#  num = 18-12
+#  num = 18-19
 #  print(the_factorial_assignment(num))
 # except FactorialException:
-#   print(factorial_exception_message)
+#   print(config['Messages']['factorial_exception_message'])
 # print('continue...')
 
 
@@ -716,12 +732,12 @@ def students_simple_data(csv_path):
 
   # items,  e_mail, ID_list, phone_num, name, grade, subject = []
   items = []
-  e_mail_list = []     # 0
-  ID_list = []         # 1
+  e_mail_list = []  # 0
+  ID_list = []  # 1
   phone_num_list = []  # 2
-  name_list = []       # 3
-  grade_list = []      # 4
-  subject_list = []    # 5
+  name_list = []  # 3
+  grade_list = []  # 4
+  subject_list = []  # 5
 
   with open(csv_path, mode='r') as file:
     reader = csv.reader(file)
@@ -748,7 +764,7 @@ def students_simple_data(csv_path):
       print("e-mail: {} -> Valid".format(result[0]))
       # logger.info(result)
     else:
-      print(f"{CRED}e-mail: %s ----> not Valid{CEND}" % e_mail)
+      print("{CRED}e-mail: %s ----> not Valid{CEND}" % e_mail)
       count += 1
   print("\tOut of {} e-mails {} are in-valid".format(len(e_mail_list), count))
   time.sleep(1)
@@ -761,7 +777,7 @@ def students_simple_data(csv_path):
     if result:
       print("\tID: {} -> Valid".format(result[0]))
     else:
-      print(f"\t{CRED}ID: %s ----> not Valid{CEND}"%user_id)
+      print("\t{CRED}ID: %s ----> not Valid{CEND}" % user_id)
       count += 1
   print("\t\tOut of {} IDs {} are in-valid".format(len(ID_list), count))
   time.sleep(1)
@@ -775,7 +791,7 @@ def students_simple_data(csv_path):
       print("\t\tphone: {} -> Valid".format(result[0]))
     else:
       # print("\t\tphone: {} ----> not Valid".format(phone_number))
-      print(f"\t\t{CRED}phone: %s ----> not Valid{CEND}" % phone_number)
+      print("\t\t{CRED}phone: %s ----> not Valid{CEND}" % phone_number)
       count += 1
   print("\t\t\tOut of {} phone numbers {} are in-valid".format(len(phone_num_list), count))
 
@@ -867,24 +883,24 @@ def comparing_files():
 # ______databases_MySQL_____________#
 
 
-# def mySQL():
-#   # connect with the database
-#   connection = pymysql.connect(host='localhost',
-#                                user='israel',
-#                                password='usa',
-#                                db='israel',
-#                                charset='utf8',
-#                                port=3306,
-#                                cursorclass=pymysql.cursors.DictCursor)
-#   try:
-#     with connection.cursor() as cursor:
-#       sql = "INSERT INTO `users` (`username`, `password`) VALUES (%s, %s)"
-#       cursor.execute(sql, ('haimm', '12345'))
-#     # we must commit in order to have the changes saved
-#     connection.commit()
-#
-#   finally:
-#     connection.close()
+def mySQL():
+  # connect with the database
+  # connection = pymysql.connect(host='localhost',
+                               user='israel',
+                               password='usa',
+                               db='israel',
+                               charset='utf8',
+                               port=3306,
+                               # cursorclass=pymysql.cursors.DictCursor)
+  # try:
+    # with connection.cursor() as cursor:
+    #   sql = "INSERT INTO `users` (`username`, `password`) VALUES (%s, %s)"
+      # cursor.execute(sql, ('haimm', '12345'))
+    # we must commit in order to have the changes saved
+    # connection.commit()
+
+  # finally:
+    # connection.close()
 
 
 # __________reqularExpression_________#
@@ -915,41 +931,52 @@ class Triangle:
     self.B_length = B_length
     self.C_length = C_length
 
+    The_Triangle_Inequality_Throrem = A_length + B_length > C_length and \
+                                      C_length + B_length > A_length and \
+                                      A_length + C_length > B_length
+    if not The_Triangle_Inequality_Throrem:
+      raise TriangleException
 
-def the_triangle_assignment_test(A_length, B_length, C_length):
-  The_Triangle_Inequality_Throrem = A_length + B_length > C_length and \
-                                    C_length + B_length > A_length and \
-                                    A_length + C_length > B_length
-  if not The_Triangle_Inequality_Throrem:
-    raise TriangleException
+    # time.sleep(2)
+    print (" A_length = {}\n B_length  = {}\n C_length = {}\n".format(A_length,B_length,C_length))
+    print ("""
+            A + B > C
+            C + B > A
+            A + C > B
+            """)
+    time.sleep(2)
 
-  #   logger.info(CRED,Triangle_exception_message,CEND)
-  #   logger.info (" A_length = {}\n B_length  = {}\n C_length = {}\n".format(A_length,B_length,C_length))
-  #   logger.info ("""
-  #           A + B > C
-  #           C + B > A
-  #           A + C > B
-  #           """)
-  #   os.startfile(r"C:\Users\Assaf\PycharmProjects\untitled\triangle_inequality_theorem.JPG")
-  #
-  #   time.sleep(1)
-  #   raise TriangleException
-  # else:
-  #   logger.info (" A_length = {}\n B_length  = {}\n C_length = {}\n".format(A_length,B_length,C_length))
-  #   logger.info (" The_Triangle_Inequality_Throrem is satisfied for all 3 conditions of the sides ")
-  #
-  #   #Draw Triangle using Turtle python lib
-  #   draw = turtle.Turtle()
-  #   draw.write("Triangle", True, align="right", font='david')
-  #   draw.pensize(10)
-  #   draw.screen.bgcolor("orange")
-  #   draw.forward(100)
-  #   draw.left(120)
-  #   draw.forward(100)
-  #   draw.fillcolor("violet")
-  #   draw.left(120)
-  #   draw.forward(100)
-  #   turtle.done()
+    os.startfile((config['paths']['triangle_inequality_theorem']))
+
+    print (" The_Triangle_Inequality_Throrem is satisfied for all 3 conditions of the sides ")
+
+    time.sleep(2)
+    #Draw Triangle using Turtle python lib
+    draw = turtle.Turtle()
+    draw.write("Triangle", True, align="right", font='david')
+    draw.pensize(10)
+    draw.screen.bgcolor("white")
+    draw.forward(100)
+    draw.left(120)
+    draw.forward(100)
+    draw.fillcolor("violet")
+    draw.left(120)
+    draw.forward(100)
+    turtle.done()
+
+
+# try:
+#   A = Triangle(A_length=1, B_length=1, C_length=14)
+#
+# except TriangleException:
+#   print(config['Messages']['Triangle_exception_message'])
+#   time.sleep(0.2)
+#   print ("""
+#             A + B > C
+#             C + B > A
+#             A + C > B
+#             """)
+#   os.startfile((config['paths']['triangle_inequality_theorem']))
 
 
 class BankException(Exception):
@@ -1013,8 +1040,199 @@ def bank_account_exception_assignment(starting_balance, deposit_sum, withdraw_su
       raise BankException
 
 
-class Test(object):
-  pass
+# # ____Classes__________##
+
+# Parallel Lines #
+"""
+Define the Line and the Point classes.
+Each Line object should use two Point objects for representing a two-dimensional line.
+Develop a function that checks whether or not two lines are parallel with each other
+"""
+
+
+class Point:
+  def __init__(self, xVal, yVal):
+   self.x = xVal
+   self.y = yVal
+
+
+class Line:
+  def __init__(self, point1, point2):
+   self.p1 = point1
+   self.p2 = point2
+
+
+def check_parallel(l1,l2):
+  l1slope = (l1.p1.y - l1.p2.y) / (l1.p1.x - l1.p2.x)
+  l2slope = (l2.p1.y - l2.p2.y) / (l2.p1.x - l2.p2.x)
+  return l2slope == l1slope
+
+# pnt1 = Point(3, 4)
+# pnt2 = Point(1, 2)
+# pnt3 = Point(2, 4)
+# pnt4 = Point(5, 2)
+
+# line1=Line(pnt1,pnt2)
+# line2=Line(pnt3,pnt4)
+
+# if check_parallel(line1,line2):
+#   print ("Para")
+# else:
+#   print("not")
+
+
+class Person:
+  def __init__(self, id, name):
+    self.id = id
+    self.name = name
+
+  def details(self):
+    return "id=%d name=%s" % (self.id, self.name)
+
+
+class Student(Person):
+  def __init__(self, id, name, average):
+    self.average = average
+    super().__init__(id, name)
+
+  def details(self):
+    return super().details() + " average=%d" % self.average
+
+
+ob = Student(123123, "danidin", 98)
+# print(ob.details())
+
+
+class Dog:
+ def __init__(self,str):
+  self.name = str
+
+ def hello(self):
+  print("hau hau")
+
+
+class Cat:
+ def __init__(self,str):
+  self.name = str
+
+ def hello(self):
+  print("miau miau")
+
+
+class Cow:
+ def __init__(self,str):
+  self.name = str
+
+ def hello(self):
+  print("moo moo")
+
+
+# animals = [Cow("Metilda"), Dog("Doberman"), Cat("Mitzi"), Cow("Shula")]
+# for animal in animals:
+#  animal.hello()
+
+
+
+## Total Area of Shapes #
+
+"""
+You should define the Shape class. The Shape class should include one method only.
+ The printDetails() method. Calling this method we shall get, printed to the screen,
+  the text "i am a Shape" together with the area.
+You should define two classes that extend Shape. The first is Circle.
+ The second is Rectangle. Both the class Circle and Rectangle should
+ include the definition for the area() method.
+Each object instantiated from Circle should include the radius attribute.
+ The Circle __init__ method should receive the radius of the new created object.
+Each object instantiated from Rectangle should include the width and height attributes.
+ The Rectangle __init__ method should receive the width and the
+ height of the new created object.
+You should use the classes you defined for creating a list of objects that represent the following shapes and calculate the total area of all shapes:
+1. circle, radius=5
+2. rectangle, width=7, height=9
+3. rectangle, width=6, height=10
+4. circle, radius=8
+"""
+
+
+class Shape:
+  def printDetails(self):
+    print("i am a Shape ", self.area())
+    # print("my Area is:", self.name())
+
+
+class Circle(Shape):
+  def __init__(self, radius):
+    self.radius = radius
+
+
+  def area(self):
+    return self.radius*self.radius*3.14
+
+
+class Rectangle(Shape):
+  def __init__(self,width,height):
+    self.width = width
+    self.height = height
+
+  def area(self):
+    return self.width*self.height
+
+
+# areas_ofShapes = [Circle(radius=5),
+#                   Rectangle(width=7, height=9),
+#                   Rectangle(width=6, height=10),
+#                   Circle(radius=8)]
+# total = 0
+# for area_ofShape in areas_ofShapes:
+#   total = total + area_ofShape.area()
+# print(round(total))
+
+
+class Circle:
+  """
+  Develop a simple module that includes the definition for the Circle class.
+  Each object instantiated from that class should represent a specific circle.
+  The definition for the Circle class should include two methods: area() and perimeter().
+  Develop a separated module that uses the circle module and creates two objects for representing two circles.
+  The first circle has the 5cm radius. The second circle has the 6cm radius.
+  Your code should print out the area and the perimeter of each one of these two circles.
+  """
+  def __init__(self, radius):
+    self.radius = radius
+
+  def area(self):
+    return self.radius*self.radius*3.14
+
+  def perimeter(self):
+    return 2*3.14*self.radius
+
+
+
+
+"""
+Develop a separated module the includes the definition for the Student class.
+The variables each Student object should have are 'firstName', 'lastName', 'id' and 'average'.
+Develop a simple separated module (that uses the student module)
+that includes simple code for creating a list of objects. Each object represents a specific
+student in class. Your code should calculate the students average and print it to the screen.
+"""
+
+
+class Rectangle:
+ def __init__(self, w=10, h=10):
+   self.__width = w
+   self.__height = h
+
+ def area(self):
+  return self.__width*self.__height
+
+
+ob = Rectangle(3, 4)
+print(ob.area())
+ob.__width = 12
+print(ob.area())
+
 
 
 def main():
@@ -1056,8 +1274,9 @@ def main():
   # comparing_files()                           #TODO:done
   # the_mathutils_module_assignment(a,b)        #TODO:done
   # bank_israel_currency_exchange_rates()       #TODO:done
+  # the_triangle_assignment_test                #TODO:done
+  # students_simple_data(csv_path)              #TODO:done
   # students_data()
-  # students_simple_data(csv_path)              # TODO:done
   # comprehension_set_of_students()
   # currencies_tcp_ip_client_server()
   # the_factorial_assignment(num)
@@ -1065,9 +1284,17 @@ def main():
   # students_average_calculation()
   # regularExpressionDemo()
   # Triangle.the_triangle_assignment()
-  # the_triangle_assignment_test(A_length=12, B_length=13, C_length=14) #TODO: convert this func to work in class (?)
   # bank_account_exception_assignment(starting_balance=100, deposit_sum=50, withdraw_sum=0)
   # simple_files_copying(source = source , destination= destination)
+  # create_directories_with_config_file()
+
+  ## ____classes:______ ##
+
+  # areas_ofShapes = [Circle(radius=5),Circle(radius=6)];
+  # for area_ofShape in areas_ofShapes:  print("area:",round(area_ofShape.area()));  print("Perimiter:",round(area_ofShape.perimeter()))
+
+
+
 
   # TODO:
   '''
@@ -1081,7 +1308,7 @@ def main():
   '''
 
   # _________________________________________________
-  # paste_func_template(func_name="The Triangle Assignment")
+  # paste_func_template(func_name="Simple Circle Class")
 
 
 if __name__ == '__main__':
