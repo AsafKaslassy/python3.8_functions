@@ -27,9 +27,10 @@ import xml.dom.minidom
 import pymysql.cursors
 import configparser
 from fractions import Fraction
+from dataclasses import dataclass
+
 # import validate_data_using_Regex
 # from utils import MathUtilsException
-
 
 
 config = configparser.ConfigParser()
@@ -361,8 +362,7 @@ def create_directories_with_config_file():
   config = configparser.ConfigParser()
   config.read('temp.ini')
   pycharm_path = (config['dani']['ServerAliveInterval'])
-  print(os.path.join(pycharm_path,'file_copy.log'))
-
+  print(os.path.join(pycharm_path, 'file_copy.log'))
 
 
 def comprehension_list_of_averages():
@@ -886,21 +886,23 @@ def comparing_files():
 def mySQL():
   # connect with the database
   # connection = pymysql.connect(host='localhost',
-                               user='israel',
-                               password='usa',
-                               db='israel',
-                               charset='utf8',
-                               port=3306,
-                               # cursorclass=pymysql.cursors.DictCursor)
-  # try:
-    # with connection.cursor() as cursor:
-    #   sql = "INSERT INTO `users` (`username`, `password`) VALUES (%s, %s)"
-      # cursor.execute(sql, ('haimm', '12345'))
-    # we must commit in order to have the changes saved
-    # connection.commit()
+  user = 'israel',
+  password = 'usa',
+  db = 'israel',
+  charset = 'utf8',
+  port = 3306,
+  # cursorclass=pymysql.cursors.DictCursor)
 
-  # finally:
-    # connection.close()
+
+# try:
+# with connection.cursor() as cursor:
+#   sql = "INSERT INTO `users` (`username`, `password`) VALUES (%s, %s)"
+# cursor.execute(sql, ('haimm', '12345'))
+# we must commit in order to have the changes saved
+# connection.commit()
+
+# finally:
+# connection.close()
 
 
 # __________reqularExpression_________#
@@ -938,8 +940,8 @@ class Triangle:
       raise TriangleException
 
     # time.sleep(2)
-    print (" A_length = {}\n B_length  = {}\n C_length = {}\n".format(A_length,B_length,C_length))
-    print ("""
+    print(" A_length = {}\n B_length  = {}\n C_length = {}\n".format(A_length, B_length, C_length))
+    print("""
             A + B > C
             C + B > A
             A + C > B
@@ -948,10 +950,10 @@ class Triangle:
 
     os.startfile((config['paths']['triangle_inequality_theorem']))
 
-    print (" The_Triangle_Inequality_Throrem is satisfied for all 3 conditions of the sides ")
+    print(" The_Triangle_Inequality_Throrem is satisfied for all 3 conditions of the sides ")
 
     time.sleep(2)
-    #Draw Triangle using Turtle python lib
+    # Draw Triangle using Turtle python lib
     draw = turtle.Turtle()
     draw.write("Triangle", True, align="right", font='david')
     draw.pensize(10)
@@ -995,12 +997,10 @@ class BankAccount(object):
     self.starting_balance = starting_balance
 
   def deposit(self, my_sum):
-    # deposit = starting_balance + my_sum
-    pass
+    deposit = self.starting_balance + my_sum
 
   def withdraw(self, my_sum):
-    # withdraw = starting_balance - my_sum
-    pass
+    withdraw = self.starting_balance - my_sum
 
 
 def bank_account_exception_assignment(starting_balance, deposit_sum, withdraw_sum):
@@ -1023,13 +1023,13 @@ def bank_account_exception_assignment(starting_balance, deposit_sum, withdraw_su
   # deposit = starting_balance + deposit_sum
   # withdraw = starting_balance - withdraw_sum
 
-  logger.info("deposit_sum =", deposit_sum)
-  logger.info("withdraw_sum =", withdraw_sum)
+  print("deposit_sum =", deposit_sum)
+  print("withdraw_sum =", withdraw_sum)
 
   current_balance = starting_balance + deposit_sum - withdraw_sum
 
   if current_balance > starting_balance:
-    logger.info("the current balance after all operations took place is: ", current_balance)
+    print("the current balance after all operations took place is: ", current_balance)
 
   while current_balance < starting_balance:
     try:
@@ -1052,20 +1052,21 @@ Develop a function that checks whether or not two lines are parallel with each o
 
 class Point:
   def __init__(self, xVal, yVal):
-   self.x = xVal
-   self.y = yVal
+    self.x = xVal
+    self.y = yVal
 
 
 class Line:
   def __init__(self, point1, point2):
-   self.p1 = point1
-   self.p2 = point2
+    self.p1 = point1
+    self.p2 = point2
 
 
-def check_parallel(l1,l2):
+def check_parallel(l1, l2):
   l1slope = (l1.p1.y - l1.p2.y) / (l1.p1.x - l1.p2.x)
   l2slope = (l2.p1.y - l2.p2.y) / (l2.p1.x - l2.p2.x)
   return l2slope == l1slope
+
 
 # pnt1 = Point(3, 4)
 # pnt2 = Point(1, 2)
@@ -1100,37 +1101,38 @@ class Student(Person):
 
 
 ob = Student(123123, "danidin", 98)
+
+
 # print(ob.details())
 
 
 class Dog:
- def __init__(self,str):
-  self.name = str
+  def __init__(self, str):
+    self.name = str
 
- def hello(self):
-  print("hau hau")
+  def hello(self):
+    print("hau hau")
 
 
 class Cat:
- def __init__(self,str):
-  self.name = str
+  def __init__(self, str):
+    self.name = str
 
- def hello(self):
-  print("miau miau")
+  def hello(self):
+    print("miau miau")
 
 
 class Cow:
- def __init__(self,str):
-  self.name = str
+  def __init__(self, str):
+    self.name = str
 
- def hello(self):
-  print("moo moo")
+  def hello(self):
+    print("moo moo")
 
 
 # animals = [Cow("Metilda"), Dog("Doberman"), Cat("Mitzi"), Cow("Shula")]
 # for animal in animals:
 #  animal.hello()
-
 
 
 ## Total Area of Shapes #
@@ -1165,18 +1167,17 @@ class Circle(Shape):
   def __init__(self, radius):
     self.radius = radius
 
-
   def area(self):
-    return self.radius*self.radius*3.14
+    return self.radius * self.radius * 3.14
 
 
 class Rectangle(Shape):
-  def __init__(self,width,height):
+  def __init__(self, width, height):
     self.width = width
     self.height = height
 
   def area(self):
-    return self.width*self.height
+    return self.width * self.height
 
 
 # areas_ofShapes = [Circle(radius=5),
@@ -1198,40 +1199,105 @@ class Circle:
   The first circle has the 5cm radius. The second circle has the 6cm radius.
   Your code should print out the area and the perimeter of each one of these two circles.
   """
+
   def __init__(self, radius):
     self.radius = radius
 
   def area(self):
-    return self.radius*self.radius*3.14
+    return self.radius * self.radius * 3.14
 
   def perimeter(self):
-    return 2*3.14*self.radius
-
-
-
-
-"""
-Develop a separated module the includes the definition for the Student class.
-The variables each Student object should have are 'firstName', 'lastName', 'id' and 'average'.
-Develop a simple separated module (that uses the student module)
-that includes simple code for creating a list of objects. Each object represents a specific
-student in class. Your code should calculate the students average and print it to the screen.
-"""
+    return 2 * 3.14 * self.radius
 
 
 class Rectangle:
- def __init__(self, w=10, h=10):
-   self.__width = w
-   self.__height = h
+  def __init__(self, w_val, h_val):
+    self._w_val = 10
+    self._h_val = 10
+    self.width = w_val
+    self.height = h_val
 
- def area(self):
-  return self.__width*self.__height
+  def area(self):
+    return self.width * self.height
+
+  @property
+  def width(self):
+    return self._w_val
+
+  @property
+  def height(self):
+    return self._h_val
+
+  @width.setter
+  def width(self, number):
+    if number > 0:
+      self._w_val = number
+
+  @height.setter
+  def height(self, number):
+    if number > 0:
+      self._h_val = number
+
+  ob = Rectangle(3, 4)
+  ob.width = 7
+  ob.height = 8
+  # print(ob.area())
 
 
-ob = Rectangle(3, 4)
-print(ob.area())
-ob.__width = 12
-print(ob.area())
+class Circle:
+  def __init__(self, r):
+    self.radius = r
+
+  def perimeter(self):
+    return 2 * math.pi * self.radius
+
+  def area(self):
+    return math.pi * math.pow(self.radius, 2)
+
+  def __str__(self):
+    return "circle ... radius = " + str(self.radius)
+
+
+# ob = Circle(4)
+# print(ob)
+
+
+@dataclass()
+class X:
+  a: any = 10
+  b: int = 2
+
+
+x = X(2, 5)
+# print(x)
+
+
+"""
+  Develop a separated module the includes the definition for the Car class.
+  The variables each Car object should have are 'brand', 'model', 'id' and 'year'. 
+  Develop a simple separated module (that uses the Car module) that includes simple code for creating a Car object
+  that represents your car, and write the required code for printing its details to the screen. 
+"""
+
+
+class Car:
+  def __init__(self, model, Car_id, brand, year):
+    self.model = model
+    self.Car_id = Car_id
+    self.brand = brand
+    self.year = year
+
+  def __str__(self):
+    return "my car is = " + " \nmodel: "+\
+           str(self.model)+"\n Car_id: "+ \
+           str(self.Car_id)+" \nbrand: "+\
+           str(self.brand)+"\n year: "+\
+           str(self.year)
+
+
+# myCar = Car(model="Corolla", Car_id=" 1234567", brand=" Toyota", year=" 2015")
+# myOtherCar = Car(model="yaris", Car_id=" 1233267", brand=" Toyota", year=" 2018")
+# print(myCar)
 
 
 
@@ -1284,7 +1350,7 @@ def main():
   # students_average_calculation()
   # regularExpressionDemo()
   # Triangle.the_triangle_assignment()
-  # bank_account_exception_assignment(starting_balance=100, deposit_sum=50, withdraw_sum=0)
+  bank_account_exception_assignment(starting_balance=100, deposit_sum=50, withdraw_sum=0)
   # simple_files_copying(source = source , destination= destination)
   # create_directories_with_config_file()
 
@@ -1292,9 +1358,6 @@ def main():
 
   # areas_ofShapes = [Circle(radius=5),Circle(radius=6)];
   # for area_ofShape in areas_ofShapes:  print("area:",round(area_ofShape.area()));  print("Perimiter:",round(area_ofShape.perimeter()))
-
-
-
 
   # TODO:
   '''

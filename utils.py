@@ -1,3 +1,6 @@
+import os
+import logging
+import shutil
 
 # logger
 # ________________________________
@@ -35,9 +38,7 @@ def differenceof(a,b):
 class MathUtilsException(Exception):
   pass
 
-import os
-import logging
-import shutil
+
 
 # file_Copy
 # ________________________________
