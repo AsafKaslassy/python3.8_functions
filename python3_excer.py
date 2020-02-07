@@ -1238,7 +1238,7 @@ class Rectangle:
     if number > 0:
       self._h_val = number
 
-  ob = Rectangle(3, 4)
+  # ob = Rectangle(3, 4)
   ob.width = 7
   ob.height = 8
   # print(ob.area())
@@ -1264,11 +1264,9 @@ class Circle:
 
 @dataclass()
 class X:
-  a: any = 10
-  b: int = 2
+  pass
 
 
-x = X(2, 5)
 # print(x)
 
 
@@ -1349,7 +1347,7 @@ def main():
   # students_average_calculation()
   # regularExpressionDemo()
   # Triangle.the_triangle_assignment()
-  bank_account_exception_assignment(starting_balance=100, deposit_sum=50, withdraw_sum=0)
+  # bank_account_exception_assignment(starting_balance=100, deposit_sum=50, withdraw_sum=0)
   # simple_files_copying(source = source , destination= destination)
   # create_directories_with_config_file()
 
