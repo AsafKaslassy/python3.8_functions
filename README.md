@@ -18,7 +18,7 @@ ______________________________________________________________
   ---
 
 #### Types
-- [x] [Simple Reading from File](/archive/other_demo/types/files/read_from_file.py)
+- [x] [Simple Reading from File](https://github.com/AsafKaslassy/python3.8_functions/blob/master/python3_excer.py)
 - [x] [Simple Writing to File ](/archive/types/files/write_to_file.py)
 - [x] [Simple List Average ](/archive/types/list_avg-demo.py)
 - [x] [Hexadecimal, Octal and Binary Representations](/archive/types/hex-oct-dec_types.py)
