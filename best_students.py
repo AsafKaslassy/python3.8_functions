@@ -66,9 +66,6 @@ students = [
   Student(122284, "mos32h", "fasd", 92)
 ]
 
-
 best_students = filter(lambda x: x.avg > 85, students)
 for best in best_students:
   print(best)
-
-

@@ -21,124 +21,144 @@ You should instantiate the Course class you defined in order to get an object th
 
 
 class Course:
-    def __init__(self,name,ID,startDate,endDate,teacher,classroom):
-        self.__name = "no name"
-        self.__ID = -1
-        self.__startDate = -1
-        self.__endDate = -1
-        self.__teacher = "no teacher"
-        self.__classroom = "no classroom"
-        self.name = name
-        self.ID = ID
-        self.startDate = startDate
-        self.endDate = endDate
-        self.teacher = teacher
-        self.classroom = classroom
+  def __init__(self, name, ID, startDate, endDate, teacher, classroom):
+    self.__name = "no name"
+    self.__ID = -1
+    self.__startDate = -1
+    self.__endDate = -1
+    self.__teacher = "no teacher"
+    self.__classroom = "no classroom"
+    self.name = name
+    self.ID = ID
+    self.startDate = startDate
+    self.endDate = endDate
+    self.teacher = teacher
+    self.classroom = classroom
 
-    @property
-    def name(self):
-        return self.__name
-    @property
-    def ID(self):
-        return self.__ID
-    @property
-    def startDate(self):
-        return self.__startDate
-    @property
-    def endDate(self):
-        return self.__endDate
-    @property
-    def teacher(self):
-        return self.__teacher
-    @property
-    def classroom(self):
-        return self.__classroom
+  @property
+  def name(self):
+    return self.__name
 
-    ##setters
-    @name.setter
-    def name(self, txt):
-        if txt!=None:
-            self.__name = txt
-    @ID.setter
-    def ID(self, num):
-        self.__ID = num
-    @startDate.setter
-    def startDate(self,num):
-        self.__startDate = num
-    @endDate.setter
-    def endDate(self,num):
-        self.__endDate = num
-    @teacher.setter
-    def teacher(self,num):
-        self.__teacher = num
-    @classroom.setter
-    def classroom(self,num):
-        self.__classroom = num
+  @property
+  def ID(self):
+    return self.__ID
 
-    def __str__(self):
-        return str(self.name)+","+str(self.ID)+","+str(self.startDate)+","+str(self.endDate)+","+str(self.teacher)+","+str(self.classroom)
+  @property
+  def startDate(self):
+    return self.__startDate
 
+  @property
+  def endDate(self):
+    return self.__endDate
 
-    def PrintDetails(self):
-        print("name,ID,startDate,endDate,teacher,classroom")
-        return str(self.name)+","+str(self.ID)+","+str(self.startDate)+","+str(self.endDate)+","+str(self.teacher)+","+str(self.classroom)
+  @property
+  def teacher(self):
+    return self.__teacher
+
+  @property
+  def classroom(self):
+    return self.__classroom
+
+  ##setters
+  @name.setter
+  def name(self, txt):
+    if txt != None:
+      self.__name = txt
+
+  @ID.setter
+  def ID(self, num):
+    self.__ID = num
+
+  @startDate.setter
+  def startDate(self, num):
+    self.__startDate = num
+
+  @endDate.setter
+  def endDate(self, num):
+    self.__endDate = num
+
+  @teacher.setter
+  def teacher(self, num):
+    self.__teacher = num
+
+  @classroom.setter
+  def classroom(self, num):
+    self.__classroom = num
+
+  def __str__(self):
+    return str(self.name) + "," + str(self.ID) + "," + str(self.startDate) + "," + str(self.endDate) + "," + str(
+      self.teacher) + "," + str(self.classroom)
+
+  def printDetails(self):
+    print("name,ID,startDate,endDate,teacher,classroom")
+    return str(self.name) + "," + str(self.ID) + "," + str(self.startDate) + "," + str(self.endDate) + "," + str(
+      self.teacher) + "," + str(self.classroom)
 
 
 class Person:
-    def __init__(self, first, last, idVal):
-        self.__firstName = "No First Name"
-        self.__lastName = "No Last Name"
-        self.__idVal = -1
-        self.FirstName = first
-        self.LastName = last
-        self.Id = idVal
-    @property
-    def FirstName(self):
-        return self.__firstName
-    @property
-    def LastName(self):
-        return self.__lastName
-    @property
-    def Id(self):
-        return self.__id
+  def __init__(self, first, last, idVal):
+    self.__firstName = "No First Name"
+    self.__lastName = "No Last Name"
+    self.__idVal = -1
+    self.FirstName = first
+    self.LastName = last
+    self.Id = idVal
 
-    ##setters
-    @FirstName.setter
-    def FirstName(self, txt):
-        if txt!=None:
-            self.__firstName = txt
-    @LastName.setter
-    def LastName(self, txt):
-        if txt!=None:
-            self.__lastName = txt
-    @Id.setter
-    def Id(self,num):
-        self.__idVal = num
+  @property
+  def FirstName(self):
+    return self.__firstName
+
+  @property
+  def LastName(self):
+    return self.__lastName
+
+  @property
+  def Id(self):
+    return self.__id
+
+  ##setters
+  @FirstName.setter
+  def FirstName(self, txt):
+    if txt != None:
+      self.__firstName = txt
+
+  @LastName.setter
+  def LastName(self, txt):
+    if txt != None:
+      self.__lastName = txt
+
+  @Id.setter
+  def Id(self, num):
+    self.__idVal = num
 
 
 class Room:
-    def __init__(self, RoomName, floor):
-        self.__RoomName = "No Room Name"
-        self.__floor = "No floor"
-        self.RoomName = RoomName
-        self.floor = floor
-    @property
-    def RoomName(self):
-        return self.__RoomName
-    @property
-    def floor(self):
-        return self.__floor
+  def __init__(self, RoomName, floor):
+    self.__RoomName = "No Room Name"
+    self.__floor = "No floor"
+    self.RoomName = RoomName
+    self.floor = floor
 
-    ##setters
-    @RoomName.setter
-    def RoomName(self, txt):
-        if txt!=None:
-            self.__RoomName = txt
-    @floor.setter
-    def floor(self,num):
-        self.__floor = num
+  @property
+  def RoomName(self):
+    return self.__RoomName
+
+  @property
+  def floor(self):
+    return self.__floor
+
+  ##setters
+  @RoomName.setter
+  def RoomName(self, txt):
+    if txt != None:
+      self.__RoomName = txt
+
+  @floor.setter
+  def floor(self, num):
+    self.__floor = num
 
 
-ob = Course(name="Physics",ID="553503",startDate="21032020",endDate="21052020",teacher="Dr Amnon",classroom="503-3")
-
-print(ob.name)
+ob = Course(name="Physics", ID="553503", startDate="21032020", endDate="21052020",
+            teacher=Person("Dr", "Amnon", 306798),
+            classroom=Room("H1", 1))
+print(ob)
