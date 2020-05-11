@@ -8,5 +8,7 @@ def f(age):
   return f1
 
 
+
 temp = f(85)(60)
 print(temp)
+print ("finished")
