@@ -1,25 +1,56 @@
 import os
 import csv
 import time
+import sys
 
 
-# ________________________________________
+# ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 # [parameters]
 csv_file_path = r'c:\tmp\New folder'  # csv output path
 event = "E20_07_12_08_49_25"  # event to validate
 start_fgc = 1
 end_fgc = 6
-# ________________________________________
+# █████████████████████████████████████████████████████ #
 
 
-start_time = time.time()
-print("\n\n___H264 list to .CSV : filename_and_File Size__")
-time.sleep(0.7)
-print("\n")
-print('Writing file names and file size into csv "{}":'.format(csv_file_path))
-print("\n")
-print("please wait........................................")
+def printer():
+    """
 
+    :return:
+    """
+    global T_GREEN , T_blue, T_red, T_underline, ENDC, start_time
+
+    T_GREEN = '\033[32;1m'  # green text
+    T_blue = '\033[34;4m'  # blue text
+    T_red = '\033[91m'  # blue text
+    T_underline = '\033[34;4m'  # underline text
+    ENDC = '\033[m'
+
+    start_time = time.time()
+    print(T_blue + "\n\t\tH264 list to .CSV : filename_and_File Size\t\t" + ENDC)
+    time.sleep(0.7)
+    print("\n")
+    print("Please wait....")
+    print('Writing file names and file size to csv:' + T_underline + '"' + csv_file_path + '"' + ENDC)
+
+
+def progress_bar():
+    """
+
+    :return:
+    """
+    sys.stdout.write(T_GREEN + "Progress Bar\n" + ENDC)
+    toolbar_width = 20
+    sys.stdout.write("| %s" % (" " * toolbar_width))
+    sys.stdout.flush()
+    sys.stdout.write("\b" * (toolbar_width+1)) # return to start of line, after '['
+
+    for i in range(toolbar_width):
+        time.sleep(0.1)
+        sys.stdout.write(T_GREEN +"██" + ENDC)
+        sys.stdout.flush()
+    sys.stdout.write(T_GREEN + "|     100% done \n\n" + ENDC)
+    time.sleep(0.7)
 
 
 def insert_filenames_into_csv_1():
@@ -39,7 +70,8 @@ def insert_filenames_into_csv_1():
             fgc_path = r'c:\fgc{:02d}\d\Events\{}\C{:02d}\H264'.format(fgc, event, fgc)
             if not os.path.exists(fgc_path):
                 try:
-                    print('{}.... Not found,\n fgc might be down\n or has an empty folder'.format(fgc_path[0:37]))
+                    print(T_underline + '"' + fgc_path[0:37] + '...."' + ENDC
+                          + T_red + ' Not found, fgc might be down, or has an empty folder' + ENDC)
 
                 except Exception as error:
                     print(error)
@@ -52,11 +84,62 @@ def insert_filenames_into_csv_1():
                 if one_file.endswith('.ini'):  # filter files that end with specific extension
                     writer.writerow({'path': tail, 'size': file_size})  # fill csv file with data
 
-        print("finished\n")
-        print("--- process took %s seconds ---" % (time.time() - start_time))  # extract how much time the process took
-        os.startfile(csv_file_path)  # open csv file to the screen for validation
-        os.startfile(csv_filename)  # open output folder to the screen for validation
+        print(T_GREEN + "\nFinished Successfully \n\n" + ENDC)
+        print("\t--- process took %s seconds ---" % (time.time() - start_time))  # extract how much time the process took
+        test_passed =\
+            """
+        
+         /$$$$$$$$ /$$$$$$$$  /$$$$$$  /$$$$$$$$       /$$$$$$$   /$$$$$$   /$$$$$$   /$$$$$$  /$$$$$$$$ /$$$$$$$                                                                                                                                                                   
+        |__  $$__/| $$_____/ /$$__  $$|__  $$__/      | $$__  $$ /$$__  $$ /$$__  $$ /$$__  $$| $$_____/| $$__  $$                                                                                                                                                                  
+           | $$   | $$      | $$  \__/   | $$         | $$  \ $$| $$  \ $$| $$  \__/| $$  \__/| $$      | $$  \ $$                                                                                                                                                                  
+           | $$   | $$$$$   |  $$$$$$    | $$         | $$$$$$$/| $$$$$$$$|  $$$$$$ |  $$$$$$ | $$$$$   | $$  | $$                                                                                                                                                                  
+           | $$   | $$__/    \____  $$   | $$         | $$____/ | $$__  $$ \____  $$ \____  $$| $$__/   | $$  | $$                                                                                                                                                                  
+           | $$   | $$       /$$  \ $$   | $$         | $$      | $$  | $$ /$$  \ $$ /$$  \ $$| $$      | $$  | $$                                                                                                                                                                  
+           | $$   | $$$$$$$$|  $$$$$$/   | $$         | $$      | $$  | $$|  $$$$$$/|  $$$$$$/| $$$$$$$$| $$$$$$$/                                                                                                                                                                  
+           |__/   |________/ \______/    |__/         |__/      |__/  |__/ \______/  \______/ |________/|_______/                                                                                                                                                                   
+                                                                                                                                                                                                                                                                                    
+                                                                                                                                                                                                                                                                                    
+               ▐▒▒░▄                                                                                                                                                                                                                                                                
+               ▒▒▒▒▒▒▒▒▄                                                                                                                                                                                                                                                            
+               ▐▒▒▒▒▒▒▒▒▒▒▒▄                                                                         ▄▄▒▒                                                                                                                                                                           
+                ▒▒▒▒▒▒▒▒▒▒▒▒▒▒░▄                                                               ▄▄▒▒▒▒▒▒▒▒                                                                                                                                                                           
+                ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▄                                                       ▄▒▒▒▒▒▒▒▒▒▒▒▒▒▌                                                                                                                                                                           
+                 ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▄                                               ▄▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒                                                                                                                                                                            
+                  ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒                                        ▄░▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒░                                                                                                                                                                            
+                   ▐▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▄                                ▄▄▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒                                                                                                                                                                             
+                     ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▄▄▄▄▄░▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒░▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒                                                                                                                                                                              
+                      ▀▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▀                                                                                                                                                                               
+                        ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒                                                                                                                                                                                 
+                          ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒                                                                                                                                                                                   
+                            ▀▒▒▒░▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▀                                                                                                                                                                                     
+                               ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒░▒▒▒▒▀                                                                                                                                                                                        
+                             ▄▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒░                                                                                                                                                                                           
+                             ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒                                                                                                                                                                                          
+                            ▒▒▒▒▒▒▒▒▒▒░▄▄▄  ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒░▄▄▄  ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒                                                                                                                                                                                         
+                           ▒▒▒▒▒▒▒▒▒▒▒ ▀█▀   ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒░▐██▀   ▒▒▒▒▒▒▒▒▒▒▒▒▒▒░                                                                                                                                                                                        
+                          ▒▒▒▒▒▒▒▒▒▒▒▒       ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒░       ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒                                                                                                                                                                                        
+                         ▐▒▒▒▒▒▒▒▒▒▒▒▒▒▄   ▄▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▄   ▄▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒                                                                                                                                                                                       
+                         ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▀▀▀▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒                                                                                                                                                                                       
+                        ▐▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▄▄  ▄▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒                                                                                                                                                                                      
+                        ▒▒░░░░░░░░▐▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒░░░░░░░░░▒▒▒▒▒▒▒▒                                                                                                                                                                                     
+                       ▐▒░░░░░░░░░░░▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒░░░░░░░░░░░░▐▒▒▒▒▒▒                                                                                                                                                                                     
+                       ▒▒░░░░░░░░░░░▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▀░░░░▄░░░▀▒▒▒▒▒▒▒▒▒▒▒▒▒▒░░░░░░░░░░░░▐▒▒▒▒▒▒▒                                                                                                                                                                                    
+                       ▐▒▒░░░░░░░▄░▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ ▒▒▒▒▒▒▒▒▒▒ ▒▒▒▒▒▒▒▒▒▒▒▒▒▒░░░░░░░░░░░▒▒▒▒▒▒▒▒                                                                                                                                                                                    
+                        ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ ▒▒▒▒▒▒▒▒▒▒▒░▐▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒░░░░░▒▒▒▒▒▒▒▒▒▒▒▒                                                                                                                                                                                   
+                        ▐▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ ▒▒▒▒▒▒▒▒▒▒░▐▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒                                                                                                                                                                                   
+                         ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▄░▀▒▒▒▒▀░▄▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒                                                                                                                                                                                  
+                          ▐▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒                                                                                                                                                                                  
+                           ▐▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒░
+        
+        """
+        time.sleep(1.7)
+        print(T_GREEN + test_passed + ENDC)
+
+        # os.startfile(csv_file_path)  # open csv file to the screen for validation
+        # os.startfile(csv_filename)  # open output folder to the screen for validation
 
 
 if __name__ == "__main__":
+    printer()
+    progress_bar()
     insert_filenames_into_csv_1()
