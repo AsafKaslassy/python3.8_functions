@@ -1,15 +1,3 @@
-# _________________________________________________________________________________________________
-# [parameters]
-
-# if mode is "event_from_backup_path :
-# backup folder should be the following path:
-# "\\{server}\{drive}$\FreeD Backup\{team_name}\{event}\fgc##\C##\H264
-# _________________________________________________________________________________________________
-
-
-# _______________________________________________________________________________________________________________________
-
-
 import csv
 import os
 import sys
@@ -17,7 +5,16 @@ import time
 import configparser
 
 
-config_path = r"C:\Users\akaslass\Desktop\config.ini"       #sysargV
+config_path = sys.argv[1]
+if len(sys.argv) != 2:
+    print("\nERROR: no config.ini was given \n"
+          "Usage:\n"
+          "  to run this program, copy to cmd the .exe as the first argument\n"
+          "  and the config.ini path as the second argument \n"
+          "  example: \n"
+          "     d:\work\CsvWriter.exe d:\work\config.ini")
+    sys.exit(1)
+
 
 config = configparser.RawConfigParser()
 config.read(config_path)
@@ -39,15 +36,15 @@ def printer():
     """
     global T_GREEN, T_blue, T_red, T_underline, ENDC, start_time
 
-    T_GREEN = '-'  # green text
-    T_blue = '-'  # blue text
-    T_red = '-'  # red text
-    T_underline = '-'  # underline text
-    ENDC = '-'
+    T_GREEN = ' '  # green text
+    T_blue = ' '  # blue text
+    T_red = ' '  # red text
+    T_underline = ' '  # underline text
+    ENDC = ' '
 
     start_time = time.time()
-    print(T_blue + "\n\t\tH264 list to .CSV : filename_and_File Size\t\t" + ENDC)
-    time.sleep(0.7)
+    print(T_blue + "\n\t\t  H264 list to .CSV : filename_and_File Size\t\t" + ENDC)
+    time.sleep(0.5)
     print("\n")
     print("Please wait....")
     print('Writing file names and file size to csv:' + T_underline + '"' + csv_file_path + '"' + ENDC)
@@ -62,11 +59,11 @@ def progress_bar():
     toolbar_width = 10
     sys.stdout.write("| %s" % (" " * toolbar_width))
     sys.stdout.flush()
-    sys.stdout.write("\b" * (toolbar_width + 1))  # return to start of line, after '['
+    sys.stdout.write("\b" * (toolbar_width + 1))
 
     for i in range(toolbar_width):
         time.sleep(0.1)
-        sys.stdout.write(T_GREEN + "--" + ENDC)
+        sys.stdout.write("--")
         sys.stdout.flush()
     sys.stdout.write(T_GREEN + "|     100% done \n\n" + ENDC)
     time.sleep(0.7)
@@ -81,22 +78,23 @@ def insert_filenames_into_csv():
     if not os.path.exists(csv_file_path):
         os.makedirs(csv_file_path)
     # with open(csv_filename, 'wb') as csv_file:  # open csv for writing
-    with open(csv_filename, 'a') as csv_file:  # open csv for writing
+    with open(csv_filename, 'a', newline='') as csv_file:  # open csv for writing
         fieldnames = ['path', 'size']  # write csv headers
         writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
         writer.writeheader()
         for fgc in range(start_fgc, end_fgc + 1):  # run loop on fgcs
             # path to h264 folder in each fgc
             cases = {
-                # 'from_fgc': r'\\fgc{:02d}\d$\Events\{}\C{:02d}\H264'.format(fgc, event, fgc),
-                'from_fgc': r'c:\fgc{:02d}\d\Events\{}\C{:02d}\H264'.format(fgc, event, fgc),
-                'event_from_backup_path': r'\\{}\{}$\FreeD Backup\{}\{}\fgc{:02d}\C{:02d}\H264'.format(server, drive, team_name, event, fgc, fgc)
+                'from_fgc': r'\\fgc{:02d}\d$\Events\{}\C{:02d}\H264'.format(fgc, event, fgc),
+                'debug': r'c:\\fgc{:02d}\d\Events\{}\C{:02d}\H264'.format(fgc, event, fgc),
+                'event_from_backup_path': r'\\{}\{}$\FreeD Backup\{}\{}\fgc{:02d}\C{:02d}\H264'.format(
+                                            server, drive, team_name, event, fgc, fgc)
             }
             search_path = cases.get(mode, 'from_fgc')
             # print(search_path)
             if not os.path.exists(search_path):
                 try:
-                    print(T_red + search_path + "FGC Not found, fgc might be down, or has an empty folder" + ENDC)
+                    print(T_red + search_path + "  - Not found ! fgc might be down, or has an empty folder" + ENDC)
                 except Exception as error:
                     print(error)
                 continue
@@ -111,11 +109,10 @@ def insert_filenames_into_csv():
                 if one_file.endswith(file_extension):  # filter files that end with specific extension
                     writer.writerow({'path': tail, 'size': file_size})  # fill csv file with data
 
-        print(T_GREEN + "\n_____________Process Finished Successfully \n\n" + ENDC)
-        print(
-            "\t--- process took %s seconds ---" % (time.time() - start_time))  # extract how much time the process took
+        print(T_GREEN + " \n  Process Finished Successfully \n " + ENDC)
+        print("\t--- process took %d seconds ---" % (time.time() - start_time))
 
-        # os.startfile(csv_file_path)  # open csv file to the screen for validation
+        os.startfile(csv_file_path)  # open csv file to the screen for validation
         # os.startfile(csv_filename)  # open output folder to the screen for validation
 
 
